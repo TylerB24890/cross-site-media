@@ -3,7 +3,7 @@
  * Plugin Name:       Cross Site Media
  * Description:       Cross Site Media plugin to share the media library between sites in a multisite network.
  * Version:           0.1.0
- * Requires at least: 5.0
+ * Requires at least: 6.7
  * Requires PHP:      8.2
  * Author:            10up
  * Author URI:        https://10up.com

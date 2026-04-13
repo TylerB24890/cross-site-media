@@ -1,5 +1,36 @@
 /**
- * CrossSiteMedia - Admin only styles
- * https://project-website.tld
+ * CrossSiteMedia — admin-only styles.
  *
+ * Styles layer on top of core's media frame CSS; selectors are scoped to
+ * `.media-frame` and our own `.cross-site-media-*` classes.
  */
+
+/* Router heading that separates built-in tabs from subsite tabs. */
+.media-frame .media-menu > .cross-site-media-heading {
+	padding: 14px 18px 4px;
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	color: #646970;
+	pointer-events: none;
+	cursor: default;
+	background: transparent;
+}
+
+.media-frame .media-menu > .cross-site-media-heading::before,
+.media-frame .media-menu > .cross-site-media-heading::after {
+	display: none;
+}
+
+/* Origin badge in the details sidebar. */
+.cross-site-media-origin {
+	display: inline-block;
+	margin: 0 0 12px;
+	padding: 4px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	color: #0073aa;
+	background: #e5f2fa;
+	border-radius: 3px;
+}

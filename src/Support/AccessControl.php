@@ -40,15 +40,13 @@ class AccessControl {
 			return true;
 		}
 
-		// `user_can_for_blog` handles its own switch and is the canonical multisite cap check.
-		return user_can_for_blog( $user_id, $blog_id, 'upload_files' );
+		// `user_can_for_site()` (WP 6.7+) handles its own switch_to_blog and is the
+		// canonical way to check capabilities on another site in a multisite network.
+		return user_can_for_site( $user_id, $blog_id, 'upload_files' );
 	}
 
 	/**
 	 * May the current user edit attachment $attachment_id on blog $blog_id?
-	 *
-	 * Caller is responsible for being on the correct blog when reading the attachment;
-	 * this helper performs its own switch for the cap check.
 	 *
 	 * @param int $blog_id       Target blog ID.
 	 * @param int $attachment_id Attachment post ID on that blog.
@@ -59,11 +57,7 @@ class AccessControl {
 			return false;
 		}
 
-		switch_to_blog( $blog_id );
-		$can = user_can( $user_id, 'edit_post', $attachment_id );
-		restore_current_blog();
-
-		return (bool) $can;
+		return user_can_for_site( $user_id, $blog_id, 'edit_post', $attachment_id );
 	}
 
 	/**
@@ -78,8 +72,20 @@ class AccessControl {
 			$value = $request->get_param( self::BLOG_ID_PARAM );
 		} else {
 			// admin-ajax actions use $_REQUEST. Nonce is verified by the surrounding action handler.
-			// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			$value = isset( $_REQUEST[ self::BLOG_ID_PARAM ] ) ? sanitize_text_field( wp_unslash( $_REQUEST[ self::BLOG_ID_PARAM ] ) ) : null;
+			// `wp.media.model.Attachments.sync` nests extra props under a `query` sub-key
+			// before sending to `wp_ajax_query-attachments`, so we accept both shapes.
+			// phpcs:disable WordPress.Security.NonceVerification.Recommended
+			$top_level = isset( $_REQUEST[ self::BLOG_ID_PARAM ] )
+				? sanitize_text_field( wp_unslash( $_REQUEST[ self::BLOG_ID_PARAM ] ) )
+				: null;
+
+			$nested = null;
+			if ( isset( $_REQUEST['query'] ) && is_array( $_REQUEST['query'] ) && isset( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) ) {
+				$nested = sanitize_text_field( wp_unslash( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) );
+			}
+			// phpcs:enable WordPress.Security.NonceVerification.Recommended
+
+			$value = $top_level ?? $nested;
 		}
 
 		$blog_id = is_scalar( $value ) ? (int) $value : 0;
