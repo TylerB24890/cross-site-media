@@ -11,11 +11,17 @@
   ],
   "require": {
     "php": ">=8.2",
-    "10up/wp-framework": "~1.3.1"
+    "10up/wp-framework": "~1.3.1",
+    "10up/phpcs-composer": "^3.0"
   },
   "autoload": {
     "psr-4": {
       "CrossSiteMedia\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
     }
   }
 }
