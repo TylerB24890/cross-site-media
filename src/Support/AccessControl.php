@@ -61,6 +61,48 @@ class AccessControl {
 	}
 
 	/**
+	 * List of subsites the current user can browse, excluding the given blog.
+	 *
+	 * Shared helper — used by the admin enqueue (to localize subsites for JS)
+	 * and by the list-mode filter dropdown on upload.php. Callers that have
+	 * already `switch_to_blog`'d should pass the *original* blog id as
+	 * `$exclude_blog_id` so the dropdown still surfaces the now-switched site.
+	 *
+	 * @param int|null $exclude_blog_id Blog id to omit from the result. Defaults to
+	 *                                  `get_current_blog_id()` when null.
+	 *
+	 * @return array<int, array{blog_id:int, name:string, path:string}>
+	 */
+	public static function accessible_subsites( ?int $exclude_blog_id = null ): array {
+		$user_id = get_current_user_id();
+		if ( ! $user_id ) {
+			return [];
+		}
+
+		$exclude = $exclude_blog_id ?? get_current_blog_id();
+
+		$result = [];
+		foreach ( get_blogs_of_user( $user_id ) as $site ) {
+			$blog_id = (int) $site->userblog_id;
+			if ( $blog_id === $exclude ) {
+				continue;
+			}
+
+			if ( ! self::user_can_browse( $blog_id ) ) {
+				continue;
+			}
+
+			$result[] = [
+				'blog_id' => $blog_id,
+				'name'    => (string) $site->blogname,
+				'path'    => (string) $site->path,
+			];
+		}
+
+		return $result;
+	}
+
+	/**
 	 * Pull the cross-site blog id off the current request, normalized.
 	 *
 	 * Returns 0 when absent or invalid — callers should treat that as "no switch".

@@ -60,7 +60,7 @@ class MediaAssets implements ModuleInterface {
 			return;
 		}
 
-		$subsites = $this->accessible_subsites_for_current_user();
+		$subsites = \CrossSiteMedia\Support\AccessControl::accessible_subsites();
 		if ( empty( $subsites ) ) {
 			// User is only a member of one site — nothing to show.
 			return;
@@ -106,37 +106,6 @@ class MediaAssets implements ModuleInterface {
 			self::DATA_GLOBAL,
 			$this->build_localized_data( $subsites )
 		);
-	}
-
-	/**
-	 * Build the list of subsites the current user can browse, excluding the current blog.
-	 *
-	 * @return array<int, array{blog_id:int, name:string, path:string}>
-	 */
-	private function accessible_subsites_for_current_user(): array {
-		$user_id      = get_current_user_id();
-		$current_blog = get_current_blog_id();
-		$user_sites   = get_blogs_of_user( $user_id );
-
-		$result = [];
-		foreach ( $user_sites as $site ) {
-			$blog_id = (int) $site->userblog_id;
-			if ( $blog_id === $current_blog ) {
-				continue;
-			}
-
-			if ( ! \CrossSiteMedia\Support\AccessControl::user_can_browse( $blog_id ) ) {
-				continue;
-			}
-
-			$result[] = [
-				'blog_id' => $blog_id,
-				'name'    => (string) $site->blogname,
-				'path'    => (string) $site->path,
-			];
-		}
-
-		return $result;
 	}
 
 	/**
