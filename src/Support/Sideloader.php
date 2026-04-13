@@ -95,11 +95,6 @@ class Sideloader {
 	}
 
 	/**
-	 * Find a previously-sideloaded copy of this remote attachment on the current site.
-	 *
-	 * @return int Attachment ID or 0.
-	 */
-	/**
 	 * Look up a previously-sideloaded local attachment for this source pair.
 	 *
 	 * @param int $source_blog_id    Blog to read from.
