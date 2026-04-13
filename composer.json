@@ -1,12 +1,12 @@
 {
-  "name": "fueled/cross-site-media",
+  "name": "tylerb24890/cross-site-media",
   "description": "Cross Site Media plugin to share the media library between sites in a multisite network.",
   "license": "MIT",
   "type": "wordpress-plugin",
   "authors": [
     {
-      "name": "fueled",
-      "email": "info@fueled.com"
+      "name": "Tyler Bailey",
+      "email": "tylerb.media@gmail.com"
     }
   ],
   "require": {

@@ -5,8 +5,8 @@
  * Version:           0.1.0
  * Requires at least: 6.7
  * Requires PHP:      8.2
- * Author:            Fueled
- * Author URI:        https://fueled.com
+ * Author:            Tyler Bailey
+ * Author URI:        https://www.tylerb.me
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       cross-site-media
