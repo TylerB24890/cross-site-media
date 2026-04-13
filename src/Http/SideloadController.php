@@ -85,11 +85,7 @@ class SideloadController implements ModuleInterface {
 	 * @return bool
 	 */
 	public function check_permission( \WP_REST_Request $request ): bool {
-		if ( ! is_user_logged_in() ) {
-			return false;
-		}
-
-		if ( ! current_user_can( 'upload_files' ) ) {
+		if ( ! is_user_logged_in() || ! current_user_can( 'upload_files' ) ) {
 			return false;
 		}
 
@@ -113,8 +109,7 @@ class SideloadController implements ModuleInterface {
 		$source_blog_id       = (int) $request->get_param( 'source_blog_id' );
 		$source_attachment_id = (int) $request->get_param( 'source_attachment_id' );
 
-		$sideloader = new Sideloader();
-		$result     = $sideloader->sideload( $source_blog_id, $source_attachment_id );
+		$result = ( new Sideloader() )->sideload( $source_blog_id, $source_attachment_id );
 
 		if ( is_wp_error( $result ) ) {
 			$error_data = $result->get_error_data();

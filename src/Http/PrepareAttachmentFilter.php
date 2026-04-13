@@ -9,8 +9,6 @@ declare( strict_types = 1 );
 
 namespace CrossSiteMedia\Http;
 
-use CrossSiteMedia\Support\AccessControl;
-use CrossSiteMedia\Support\Sideloader;
 use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
 
