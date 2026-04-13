@@ -23,6 +23,20 @@
 	display: none;
 }
 
+/* Subsite dropdown on the Media Library (upload.php) toolbar.
+   We reuse core's `.media-filter-container` class on the outer wrapper so
+   label and select layout matches "Filter by type" / "Filter by date"
+   exactly without restating their styles. */
+.cross-site-media-manage-filter .cross-site-media-select {
+	min-width: 160px;
+}
+
+/* Visual cue when viewing a remote subsite's library on upload.php. */
+.media-frame.cross-site-media-viewing-remote .page-title-action {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
 /* Origin badge in the details sidebar. */
 .cross-site-media-origin {
 	display: inline-block;

@@ -2,6 +2,7 @@ import '../../css/admin/admin-style.css';
 
 import { getConfig } from './media/config';
 import { extendMediaFrames } from './media/frame-extensions';
+import { extendManageFrame } from './media/manage-extension';
 import { installSideloadHandler } from './media/sideload';
 import { installDetailsBadge } from './media/details-badge';
 
@@ -15,6 +16,7 @@ function boot() {
 	}
 
 	extendMediaFrames();
+	extendManageFrame();
 	installSideloadHandler();
 	installDetailsBadge();
 }

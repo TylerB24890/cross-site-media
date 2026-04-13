@@ -157,10 +157,12 @@ class MediaAssets implements ModuleInterface {
 				'blogIdParam'   => \CrossSiteMedia\Support\AccessControl::BLOG_ID_PARAM,
 			],
 			'strings'       => [
-				'routerHeading' => __( 'Subsites', 'cross-site-media' ),
-				'sideloading'   => __( 'Copying from subsite…', 'cross-site-media' ),
-				'sideloadFail'  => __( 'Could not copy the selected item from the subsite.', 'cross-site-media' ),
-				'badge'         => /* translators: %s: subsite name */ __( 'From %s', 'cross-site-media' ),
+				'routerHeading'  => __( 'Subsites', 'cross-site-media' ),
+				'sideloading'    => __( 'Copying from subsite…', 'cross-site-media' ),
+				'sideloadFail'   => __( 'Could not copy the selected item from the subsite.', 'cross-site-media' ),
+				'badge'          => /* translators: %s: subsite name */ __( 'From %s', 'cross-site-media' ),
+				'manageLabel'    => __( 'Show media from', 'cross-site-media' ),
+				'manageThisSite' => __( 'This site', 'cross-site-media' ),
 			],
 		];
 	}
