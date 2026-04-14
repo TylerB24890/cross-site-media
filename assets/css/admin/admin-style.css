@@ -1,21 +1,18 @@
 /**
- * CrossSiteMedia — admin-only styles.
- *
- * Styles layer on top of core's media frame CSS; selectors are scoped to
- * `.media-frame` and our own `.cross-site-media-*` classes.
+ * CrossSiteMedia Admin Styles.
  */
 
 /* Router heading that separates built-in tabs from subsite tabs. */
 .media-frame .media-menu > .cross-site-media-heading {
-	padding: 14px 18px 4px;
+	background: transparent;
+	color: var(--wp-theme-color-text-subtle);
+	cursor: default;
 	font-size: 11px;
 	font-weight: 600;
-	text-transform: uppercase;
 	letter-spacing: 0.05em;
-	color: #646970;
+	padding: 14px 18px 4px;
 	pointer-events: none;
-	cursor: default;
-	background: transparent;
+	text-transform: uppercase;
 }
 
 .media-frame .media-menu > .cross-site-media-heading::before,
@@ -23,10 +20,7 @@
 	display: none;
 }
 
-/* Subsite dropdown on the Media Library (upload.php) toolbar.
-   We reuse core's `.media-filter-container` class on the outer wrapper so
-   label and select layout matches "Filter by type" / "Filter by date"
-   exactly without restating their styles. */
+/* Subsite dropdown on the Media Library (upload.php) toolbar. */
 .cross-site-media-manage-filter .cross-site-media-select {
 	min-width: 160px;
 }
@@ -39,12 +33,12 @@
 
 /* Origin badge in the details sidebar. */
 .cross-site-media-origin {
-	display: inline-block;
-	margin: 0 0 12px;
-	padding: 4px 10px;
-	font-size: 11px;
-	font-weight: 600;
-	color: #0073aa;
 	background: #e5f2fa;
 	border-radius: 3px;
+	color: var(--wp-theme-color-primary);
+	display: inline-block;
+	font-size: 11px;
+	font-weight: 600;
+	margin: 0 0 12px;
+	padding: 4px 10px;
 }

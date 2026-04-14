@@ -7,8 +7,7 @@ import { installSideloadHandler } from './media/sideload';
 import { installDetailsBadge } from './media/details-badge';
 
 /**
- * Boot: `wp.media` is available as soon as `media-views` loads, which is a
- * declared dependency of this bundle, so we don't need to defer further.
+ * Ensure we can access the media frame and config data before booting the plugin.
  */
 function boot() {
 	if (!getConfig() || !window.wp || !window.wp.media) {

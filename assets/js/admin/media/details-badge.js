@@ -1,10 +1,10 @@
 /**
  * Adds a "From: {Subsite}" badge to the details sidebar whenever the selected
  * attachment is currently being served from another blog (pre-sideload) or was
- * originally sourced from one (post-sideload via the `crossSiteMediaOrigin`
- * attribute we stamp onto swapped models).
+ * originally sourced from one.
  */
 
+import { sprintf } from '@wordpress/i18n';
 import { getConfig } from './config';
 
 /**
@@ -34,7 +34,8 @@ export function installDetailsBadge() {
 			if (existing.length) {
 				existing.remove();
 			}
-			const label = config.strings.badge.replace('%s', origin.sourceBlogName);
+
+			const label = sprintf(config.strings.badge, origin.sourceBlogName);
 			const badge = window.document.createElement('div');
 			badge.className = 'cross-site-media-origin';
 			badge.textContent = label;

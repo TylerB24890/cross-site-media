@@ -5,9 +5,6 @@
  * so the simplest way to make every fetch go to a given subsite is to seed the
  * props with the blog id. The PHP MediaAjaxProxy (and RestMediaProxy) picks that
  * up and calls switch_to_blog before core's handler runs.
- *
- * We still want the standard caching and infinite-scroll behaviour of
- * `wp.media.query()`, so we reuse it as a factory and just decorate the props.
  */
 
 /**
@@ -20,11 +17,9 @@
 export function buildRemoteAttachments(blogId, extraProps = {}) {
 	const { media } = window.wp;
 
-	// `wp.media.query()` returns a cached Attachments collection keyed on props.
-	// Including the blog id in the cache key isolates each subsite's data.
+	// Add the cross_site_blog_id to the query props.
 	return media.query({
 		...extraProps,
-		// Matches CrossSiteMedia\Support\AccessControl::BLOG_ID_PARAM.
 		cross_site_blog_id: blogId,
 	});
 }

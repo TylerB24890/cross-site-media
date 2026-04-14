@@ -1,14 +1,9 @@
 /**
- * Auto-sideload handler.
+ * Sideload handler.
  *
  * When a user selects an attachment from a subsite tab, we copy it into the
  * current site so that downstream consumers (featured image, gallery blocks,
  * anything that expects a local attachment ID) keep working unmodified.
- *
- * Why swap-in-place on `selection.add` instead of hooking the toolbar's select
- * button: Backbone events don't have priorities, so we can't guarantee running
- * before core's bound handler. Mutating the model's attributes before the user
- * clicks Insert means core sees a fully-local attachment by the time it runs.
  */
 
 import apiFetch from '@wordpress/api-fetch';
@@ -16,8 +11,8 @@ import apiFetch from '@wordpress/api-fetch';
 import { getConfig } from './config';
 
 /**
- * Models that are currently mid-sideload. Used to disable the toolbar button
- * until everything pending resolves.
+ * Models that are currently mid-sideload.
+ * Used to disable the toolbar button until everything is resolved.
  */
 const pending = new Set();
 
@@ -49,20 +44,17 @@ function refreshToolbar() {
 
 /**
  * Swap a remote attachment model's attributes with the local copy returned by
- * the sideload endpoint. Backbone's `change` event propagates into the media
- * grid + details sidebar, so the UI updates on its own.
+ * the sideload endpoint.
  *
  * @param {object} model Attachment model.
  * @param {object} localAttachment Response from the /sideload endpoint.
  */
 function replaceWithLocalCopy(model, localAttachment) {
-	// Preserve the cross-site origin in a detached attribute so downstream UI
-	// (the details badge) can still reflect "originally from Site X".
+	// Preserve the cross-site origin in a detached attribute
 	const origin = model.get('crossSiteMedia');
 
-	// `set({}, { unset: true })` would drop attributes we don't want to drop.
-	// Instead, clear the current attrs and layer on the new payload so the
-	// model's `id` matches the local attachment id.
+	// Clear the current attrs and layer on the new payload.
+	// This ensures the model's `id` matches the local attachment id.
 	const nextAttributes = {
 		...localAttachment,
 		crossSiteMediaOrigin: origin,
@@ -74,7 +66,7 @@ function replaceWithLocalCopy(model, localAttachment) {
 }
 
 /**
- * Perform the sideload request for a remote attachment model.
+ * Perform the sideload request for a remote attachment.
  *
  * @param {object} model Attachment model tagged with `crossSiteMedia`.
  */
@@ -104,8 +96,7 @@ function sideloadModel(model) {
 			replaceWithLocalCopy(model, localAttachment);
 		})
 		.catch((error) => {
-			// Surface the failure visibly but non-fatally. Remove the item from
-			// the selection so the user can retry without inserting a broken ref.
+			// Surface the failure visibly but non-fatally.
 			// eslint-disable-next-line no-console
 			console.error('cross-site-media sideload failed', error);
 
@@ -166,9 +157,8 @@ function attachToFrame(frame) {
 }
 
 /**
- * Public entrypoint — hook the base MediaFrame prototype so every frame
- * instance (Select, Post, and any custom subclass that extends them) runs
- * our selection listener after core finishes wiring itself up.
+ * Public entrypoint.
+ * Hook the base MediaFrame prototype so every frame instance runs our selection listener.
  */
 export function installSideloadHandler() {
 	const { media } = window.wp || {};

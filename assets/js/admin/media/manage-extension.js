@@ -1,20 +1,12 @@
 /**
- * Extend `wp.media.view.MediaFrame.Manage` (the Media Library screen at
- * `upload.php`) with a "Show media from" subsite dropdown.
- *
- * Unlike the modal frames — which have a built-in router tab bar — the Manage
- * frame doesn't expose a router region on-page. Rather than retrofit tabs, we
- * inject a <select> alongside the existing type/date filters. Picking a
- * subsite sets `cross_site_blog_id` on the library collection's props, which
- * triggers a re-fetch (core's Attachments model calls `_requery()` on any
- * prop change) and the grid updates in place.
+ * Add a subsite dropdown to the Media Library screen at `upload.php`.
  */
 
 import { getConfig } from './config';
 
 /**
- * Tiny local HTML-escape for <option> text. We avoid core's `_.escape` in case
- * a plugin replaces Underscore at runtime.
+ * Tiny local HTML-escape for <option> text.
+ * We're avoiding core's `_.escape` in case a plugin replaces Underscore at runtime.
  *
  * @param {string} input Text to escape.
  * @returns {string} Escaped text.
@@ -29,7 +21,7 @@ function escapeHtml(input) {
 }
 
 /**
- * Factory: build a Backbone view that renders our subsite <select> and keeps
+ * Build a Backbone view that renders our subsite <select> and keeps
  * the library collection's `cross_site_blog_id` prop in sync with it.
  *
  * @param {object} controller Media frame instance.
@@ -40,9 +32,6 @@ function buildSubsiteSelectView(controller, config) {
 	const { media } = window.wp;
 	const SubsiteSelectView = media.View.extend({
 		tagName: 'div',
-		// Matches core's filter wrappers (Type, Date). Toolbar placement is
-		// driven by `options.priority < 0 → secondary` (left side) and
-		// `.media-filter-container` gives us the same label + select styling.
 		className: 'media-filter-container cross-site-media-manage-filter',
 		events: {
 			'change select': 'onChange',
@@ -89,7 +78,7 @@ function buildSubsiteSelectView(controller, config) {
 			if (!raw) {
 				this.collection.props.unset(config.rest.blogIdParam);
 			} else {
-				this.collection.props.set(config.rest.blogIdParam, parseInt(raw, 10));
+				this.collection.props.set(config.rest.blogIdParam, Number(raw));
 			}
 		},
 	});
@@ -97,16 +86,13 @@ function buildSubsiteSelectView(controller, config) {
 	return new SubsiteSelectView({
 		controller,
 		collection: controller.state().get('library'),
-		// `wp.media.view.Toolbar.set` reads `view.options.priority` to decide
-		// between primary (right) and secondary (left) regions. Negative =
-		// secondary. Land us after the type (-80) and date (-75) filters.
 		priority: -70,
 	});
 }
 
 /**
- * Public entrypoint — attaches a subsite dropdown to every AttachmentsBrowser
- * that the Manage frame creates.
+ * Public entrypoint.
+ * Attaches a subsite dropdown to every AttachmentsBrowser.
  */
 export function extendManageFrame() {
 	const config = getConfig();
@@ -129,8 +115,7 @@ export function extendManageFrame() {
 		orig.apply(this, args);
 
 		// After core finishes building the AttachmentsBrowser + toolbar,
-		// plug our <select> into the toolbar. Priority -70 lands it after
-		// the type filter (-80) and date filter (-75).
+		// plug our <select> into the toolbar.
 		const browser = this.browserView;
 		if (!browser || !browser.toolbar) {
 			return;
