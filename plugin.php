@@ -5,6 +5,7 @@
  * Version:           0.1.0
  * Requires at least: 6.7
  * Requires PHP:      8.2
+ * Network:           true
  * Author:            Tyler Bailey
  * Author URI:        https://www.tylerb.me
  * License:           GPL v2 or later
