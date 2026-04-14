@@ -1,6 +1,6 @@
 <?php
 /**
- * Enqueue + localize the admin-side assets that extend wp.media with subsite tabs.
+ * Enqueue + localize the admin-side assets.
  *
  * @package CrossSiteMedia
  */
@@ -11,14 +11,16 @@ namespace CrossSiteMedia\Admin;
 
 use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
+use TenupFramework\Assets\GetAssetInfo;
+use CrossSiteMedia\Support\AccessControl;
+use CrossSiteMedia\Http\SideloadController;
 
 /**
- * Attaches the compiled admin bundle to any admin page that also loads `wp.media`,
- * plus to the standalone Media Library screen. The bundle is empty on pages without
- * media (script-loader dependency on `media-views` handles that automatically).
+ * MediaAssets class.
  */
 class MediaAssets implements ModuleInterface {
 	use Module;
+	use GetAssetInfo;
 
 	/**
 	 * Script/style handle used for registration + localization.
@@ -31,9 +33,7 @@ class MediaAssets implements ModuleInterface {
 	public const DATA_GLOBAL = 'CrossSiteMedia';
 
 	/**
-	 * Register only on multisite admin requests. Modals can also load on the front end
-	 * via Gutenberg in some flows, but for v1 we scope this to wp-admin to keep the
-	 * surface area manageable.
+	 * Register only on multisite admin requests.
 	 *
 	 * @return bool
 	 */
@@ -42,20 +42,26 @@ class MediaAssets implements ModuleInterface {
 	}
 
 	/**
-	 * Hook into `admin_enqueue_scripts` so we can enqueue alongside `media-views`.
+	 * Hook into admin_enqueue_scripts.
 	 *
 	 * @return void
 	 */
 	public function register() {
+		$this->setup_asset_vars(
+			dist_path: CROSS_SITE_MEDIA_DIST_PATH,
+			fallback_version: CROSS_SITE_MEDIA_VERSION
+		);
+
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue' ] );
 	}
 
 	/**
-	 * Enqueue + localize the admin bundle.
+	 * Enqueue + localize the admin assets.
 	 *
 	 * @return void
 	 */
 	public function enqueue(): void {
+		// Only enqueue if the user has the ability to upload files on the current site.
 		if ( ! current_user_can( 'upload_files' ) ) {
 			return;
 		}
@@ -66,21 +72,18 @@ class MediaAssets implements ModuleInterface {
 			return;
 		}
 
-		$asset_file = CROSS_SITE_MEDIA_DIST_PATH . 'js/admin.asset.php';
-		$asset      = file_exists( $asset_file )
-			? require $asset_file
-			: [
-				'dependencies' => [],
-				'version'      => CROSS_SITE_MEDIA_VERSION,
-			];
-
+		/**
+		 * Script dependencies.
+		 *
+		 * @var array<string> $dependencies
+		 */
+		$dependencies = $this->get_asset_info( 'admin', 'dependencies' );
 		$dependencies = array_unique(
 			array_merge(
-				$asset['dependencies'],
+				$dependencies,
 				[
 					'media-views',
 					'media-editor',
-					'wp-api-fetch',
 					'wp-i18n',
 				]
 			)
@@ -90,7 +93,7 @@ class MediaAssets implements ModuleInterface {
 			self::HANDLE,
 			CROSS_SITE_MEDIA_DIST_URL . 'js/admin.js',
 			$dependencies,
-			$asset['version'],
+			$this->get_asset_info( 'admin', 'version' ),
 			true
 		);
 
@@ -98,7 +101,7 @@ class MediaAssets implements ModuleInterface {
 			self::HANDLE,
 			CROSS_SITE_MEDIA_DIST_URL . 'css/admin.css',
 			[],
-			$asset['version']
+			$this->get_asset_info( 'admin', 'version' )
 		);
 
 		wp_localize_script(
@@ -111,9 +114,9 @@ class MediaAssets implements ModuleInterface {
 	/**
 	 * Shape the data blob read by the JS bundle on boot.
 	 *
-	 * @param array<int, array{blog_id:int, name:string, path:string}> $subsites Subsites list.
+	 * @param array $subsites Subsites list.
 	 *
-	 * @return array<string, mixed>
+	 * @return array
 	 */
 	private function build_localized_data( array $subsites ): array {
 		return [
@@ -122,8 +125,8 @@ class MediaAssets implements ModuleInterface {
 			'rest'          => [
 				'root'          => esc_url_raw( rest_url() ),
 				'nonce'         => wp_create_nonce( 'wp_rest' ),
-				'sideloadRoute' => 'cross-site-media/v1/sideload',
-				'blogIdParam'   => \CrossSiteMedia\Support\AccessControl::BLOG_ID_PARAM,
+				'sideloadRoute' => SideloadController::get_endpoint(),
+				'blogIdParam'   => AccessControl::BLOG_ID_PARAM,
 			],
 			'strings'       => [
 				'routerHeading'  => __( 'Subsites', 'cross-site-media' ),
@@ -131,7 +134,7 @@ class MediaAssets implements ModuleInterface {
 				'sideloadFail'   => __( 'Could not copy the selected item from the subsite.', 'cross-site-media' ),
 				'badge'          => /* translators: %s: subsite name */ __( 'From %s', 'cross-site-media' ),
 				'manageLabel'    => __( 'Show media from', 'cross-site-media' ),
-				'manageThisSite' => __( 'This site', 'cross-site-media' ),
+				'manageThisSite' => __( 'Current site', 'cross-site-media' ),
 			],
 		];
 	}

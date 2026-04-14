@@ -9,18 +9,17 @@ declare( strict_types = 1 );
 
 namespace CrossSiteMedia\Support;
 
+use WP_Error;
+use WP_Query;
+
 /**
- * Sideloads a single attachment, recording its origin so future selections of the same
- * remote attachment reuse the local copy instead of re-downloading.
- *
- * Why sideload at all: in the cross-site-media flow, every selection in the media modal
- * should resolve to a real local attachment ID so featured images, gallery blocks, and
- * any other consumer that requires `post_id` keep working unmodified.
+ * Sideload a single attachment from a remote subsite into the current site.
+ * This is used for featured images and gallery support requiring a local attachment ID.
  */
 class Sideloader {
 
 	/**
-	 * Postmeta keys recorded on every sideloaded attachment so we can find it again.
+	 * Postmeta keys to track the source blog and attachment ID.
 	 */
 	public const META_SOURCE_BLOG = '_cross_site_media_source_blog_id';
 	public const META_SOURCE_POST = '_cross_site_media_source_attachment_id';
@@ -31,14 +30,14 @@ class Sideloader {
 	 * @param int $source_blog_id    Blog to read from.
 	 * @param int $source_attachment Attachment post ID on the source blog.
 	 *
-	 * @return int|\WP_Error Local attachment ID, or WP_Error on failure.
+	 * @return int|WP_Error Local attachment ID, or WP_Error on failure.
 	 */
-	public function sideload( int $source_blog_id, int $source_attachment ) {
+	public function sideload( int $source_blog_id, int $source_attachment ): int|WP_Error {
 		if ( $source_blog_id <= 0 || $source_attachment <= 0 ) {
-			return new \WP_Error( 'cross_site_media_invalid_args', __( 'Invalid blog or attachment id.', 'cross-site-media' ) );
+			return new WP_Error( 'cross_site_media_invalid_args', __( 'Invalid blog or attachment id.', 'cross-site-media' ) );
 		}
 
-		// Dedupe before doing any work.
+		// Ensure we don't already have a local copy of this attachment.
 		$existing = $this->find_existing_local_copy( $source_blog_id, $source_attachment );
 		if ( $existing ) {
 			return $existing;
@@ -57,12 +56,12 @@ class Sideloader {
 		// Copy the source file into a tmp file under the current site's uploads.
 		$tmp = wp_tempnam( $source['filename'] );
 		if ( ! $tmp ) {
-			return new \WP_Error( 'cross_site_media_tmp_failed', __( 'Unable to allocate temporary file.', 'cross-site-media' ) );
+			return new WP_Error( 'cross_site_media_tmp_failed', __( 'Unable to allocate temporary file.', 'cross-site-media' ) );
 		}
 
 		if ( ! @copy( $source['path'], $tmp ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors
 			wp_delete_file( $tmp );
-			return new \WP_Error( 'cross_site_media_copy_failed', __( 'Failed to copy source media file.', 'cross-site-media' ) );
+			return new WP_Error( 'cross_site_media_copy_failed', __( 'Failed to copy source media file.', 'cross-site-media' ) );
 		}
 
 		$file_array = [
@@ -70,7 +69,7 @@ class Sideloader {
 			'tmp_name' => $tmp,
 		];
 
-		// Sideload into the current blog. post_data fills in title/caption/description.
+		// Sideload into the current blog.
 		$post_data = [
 			'post_title'   => $source['title'],
 			'post_content' => $source['description'],
@@ -84,16 +83,18 @@ class Sideloader {
 			return $attachment_id;
 		}
 
-		// Preserve alt text and stamp origin metadata.
-		if ( '' !== $source['alt'] ) {
-			update_post_meta( $attachment_id, '_wp_attachment_image_alt', $source['alt'] );
+		// Preserve all origin postmeta.
+		if ( $preserve_meta && ! empty( $source['postmeta'] ) ) {
+			foreach ( $source['postmeta'] as $key => $value ) {
+				update_post_meta( $attachment_id, $key, $value );
+			}
 		}
+
 		update_post_meta( $attachment_id, self::META_SOURCE_BLOG, $source_blog_id );
 		update_post_meta( $attachment_id, self::META_SOURCE_POST, $source_attachment );
 
 		return (int) $attachment_id;
 	}
-
 	/**
 	 * Look up a previously-sideloaded local attachment for this source pair.
 	 *
@@ -103,7 +104,7 @@ class Sideloader {
 	 * @return int Attachment ID or 0 when no copy exists yet.
 	 */
 	private function find_existing_local_copy( int $source_blog_id, int $source_attachment ): int {
-		$query = new \WP_Query(
+		$query = new WP_Query(
 			[
 				'post_type'              => 'attachment',
 				'post_status'            => 'inherit',
@@ -138,21 +139,21 @@ class Sideloader {
 	 * @param int $source_blog_id    Blog to read from.
 	 * @param int $source_attachment Attachment post ID on the source blog.
 	 *
-	 * @return array{filename:string,path:string,title:string,caption:string,description:string,alt:string}|\WP_Error
+	 * @return array{filename:string,path:string,title:string,caption:string,description:string,metadata:array|false,postmeta:mixed}|WP_Error
 	 */
-	private function read_source( int $source_blog_id, int $source_attachment ) {
+	private function read_source( int $source_blog_id, int $source_attachment ): array|WP_Error {
 		switch_to_blog( $source_blog_id );
 
 		$post = get_post( $source_attachment );
 		if ( ! $post || 'attachment' !== $post->post_type ) {
 			restore_current_blog();
-			return new \WP_Error( 'cross_site_media_not_found', __( 'Source attachment not found.', 'cross-site-media' ) );
+			return new WP_Error( 'cross_site_media_not_found', __( 'Source attachment not found.', 'cross-site-media' ) );
 		}
 
 		$file_path = get_attached_file( $source_attachment, true );
 		if ( ! $file_path || ! is_readable( $file_path ) ) {
 			restore_current_blog();
-			return new \WP_Error( 'cross_site_media_unreadable', __( 'Source media file is not readable.', 'cross-site-media' ) );
+			return new WP_Error( 'cross_site_media_unreadable', __( 'Source media file is not readable.', 'cross-site-media' ) );
 		}
 
 		$data = [
@@ -161,8 +162,20 @@ class Sideloader {
 			'title'       => (string) $post->post_title,
 			'caption'     => (string) $post->post_excerpt,
 			'description' => (string) $post->post_content,
-			'alt'         => (string) get_post_meta( $source_attachment, '_wp_attachment_image_alt', true ),
+			'metadata'    => wp_get_attachment_metadata( $source_attachment ),
+			'postmeta'    => get_post_meta( $source_attachment ),
 		];
+
+		/**
+		 * Filters the source data for an attachment before it is sideloaded.
+		 *
+		 * @param array $data              The source data.
+		 * @param int   $source_blog_id    The ID of the source blog.
+		 * @param int   $source_attachment The ID of the source attachment.
+		 *
+		 * @return array
+		 */
+		$data = apply_filters( 'cross_site_media_source_data', $data, $source_blog_id, $source_attachment );
 
 		restore_current_blog();
 

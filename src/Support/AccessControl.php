@@ -1,6 +1,7 @@
 <?php
 /**
  * Capability checks for cross-site media access.
+ * Determines if the current user has the necessary capabilities to interact with media on a given blog.
  *
  * @package CrossSiteMedia
  */
@@ -9,23 +10,21 @@ declare( strict_types = 1 );
 
 namespace CrossSiteMedia\Support;
 
+use WP_REST_Request;
+
 /**
- * Centralizes the question "is the current user allowed to interact with media on blog X?".
- *
- * The plugin's core requirement: a user only sees a subsite's media tab if they could open
- * that subsite's Media Library directly. We honor that by gating every blog switch on
- * `upload_files` against the target blog. Editing remote metadata adds an `edit_post`
- * check on the specific attachment.
+ * AccessControl class.
+ * Handles capability checks for cross-site media access.
  */
 class AccessControl {
 
 	/**
-	 * Parameter name read off the request to identify the target blog.
+	 * Target blog ID parameter name for the request.
 	 */
 	public const BLOG_ID_PARAM = 'cross_site_blog_id';
 
 	/**
-	 * May the current user browse blog $blog_id's media library?
+	 * Can the current user browse the requested blog's media library?
 	 *
 	 * @param int $blog_id Target blog ID.
 	 */
@@ -40,33 +39,49 @@ class AccessControl {
 			return true;
 		}
 
-		// `user_can_for_site()` (WP 6.7+) handles its own switch_to_blog and is the
-		// canonical way to check capabilities on another site in a multisite network.
-		return user_can_for_site( $user_id, $blog_id, 'upload_files' );
+		$user_can = user_can_for_site( $user_id, $blog_id, 'upload_files' );
+
+		/**
+		 * Filters whether the current user can browse the requested blog's media library.
+		 *
+		 * @param bool $user_can Whether the current user can browse the requested blog's media library.
+		 * @param int  $blog_id  The ID of the target blog.
+		 * @param int  $user_id  The ID of the current user.
+		 *
+		 * @return bool
+		 */
+		return apply_filters( 'cross_site_media_user_can_browse', $user_can, $blog_id, $user_id );
 	}
 
 	/**
-	 * May the current user edit attachment $attachment_id on blog $blog_id?
+	 * Can the current user edit the requested attachment on the requested blog?
 	 *
 	 * @param int $blog_id       Target blog ID.
 	 * @param int $attachment_id Attachment post ID on that blog.
 	 */
-	public static function user_can_edit_attachment( int $blog_id, int $attachment_id ): bool {
+	public static function user_can_edit( int $blog_id, int $attachment_id ): bool {
 		$user_id = get_current_user_id();
 		if ( ! $user_id || $blog_id <= 0 || $attachment_id <= 0 ) {
 			return false;
 		}
 
-		return user_can_for_site( $user_id, $blog_id, 'edit_post', $attachment_id );
+		$user_can = user_can_for_site( $user_id, $blog_id, 'edit_post', $attachment_id );
+
+		/**
+		 * Filters whether the current user can edit the requested attachment on the requested blog.
+		 *
+		 * @param bool $user_can Whether the current user can edit the requested attachment on the requested blog.
+		 * @param int  $blog_id       The ID of the target blog.
+		 * @param int  $attachment_id The ID of the attachment.
+		 * @param int  $user_id       The ID of the current user.
+		 *
+		 * @return bool
+		 */
+		return apply_filters( 'cross_site_media_user_can_edit', $user_can, $blog_id, $attachment_id, $user_id );
 	}
 
 	/**
 	 * List of subsites the current user can browse, excluding the given blog.
-	 *
-	 * Shared helper — used by the admin enqueue (to localize subsites for JS)
-	 * and by the list-mode filter dropdown on upload.php. Callers that have
-	 * already `switch_to_blog`'d should pass the *original* blog id as
-	 * `$exclude_blog_id` so the dropdown still surfaces the now-switched site.
 	 *
 	 * @param int|null $exclude_blog_id Blog id to omit from the result. Defaults to
 	 *                                  `get_current_blog_id()` when null.
@@ -79,9 +94,9 @@ class AccessControl {
 			return [];
 		}
 
-		$exclude = $exclude_blog_id ?? get_current_blog_id();
+		$exclude  = $exclude_blog_id ?? get_current_blog_id();
+		$subsites = [];
 
-		$result = [];
 		foreach ( get_blogs_of_user( $user_id ) as $site ) {
 			$blog_id = (int) $site->userblog_id;
 			if ( $blog_id === $exclude ) {
@@ -92,37 +107,40 @@ class AccessControl {
 				continue;
 			}
 
-			$result[] = [
+			$subsites[] = [
 				'blog_id' => $blog_id,
 				'name'    => (string) $site->blogname,
 				'path'    => (string) $site->path,
 			];
 		}
 
-		return $result;
+		return $subsites;
 	}
 
 	/**
-	 * Pull the cross-site blog id off the current request, normalized.
+	 * Extract the target blog ID from the current request.
 	 *
-	 * Returns 0 when absent or invalid — callers should treat that as "no switch".
+	 * @param WP_REST_Request|null $request Optional REST request to read from.
 	 *
-	 * @param \WP_REST_Request|null $request Optional REST request to read from.
+	 * @return int
 	 */
-	public static function requested_blog_id( ?\WP_REST_Request $request = null ): int {
-		if ( $request instanceof \WP_REST_Request ) {
+	public static function requested_blog_id( ?WP_REST_Request $request = null ): int {
+		if ( $request instanceof WP_REST_Request ) {
 			$value = $request->get_param( self::BLOG_ID_PARAM );
 		} else {
-			// admin-ajax actions use $_REQUEST. Nonce is verified by the surrounding action handler.
-			// `wp.media.model.Attachments.sync` nests extra props under a `query` sub-key
-			// before sending to `wp_ajax_query-attachments`, so we accept both shapes.
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended
 			$top_level = isset( $_REQUEST[ self::BLOG_ID_PARAM ] )
 				? sanitize_text_field( wp_unslash( $_REQUEST[ self::BLOG_ID_PARAM ] ) )
 				: null;
 
 			$nested = null;
-			if ( isset( $_REQUEST['query'] ) && is_array( $_REQUEST['query'] ) && isset( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) ) {
+
+			// wp.media nests extra props under a `query` sub-key.
+			if (
+				isset( $_REQUEST['query'] ) &&
+				is_array( $_REQUEST['query'] ) &&
+				isset( $_REQUEST['query'][ self::BLOG_ID_PARAM ] )
+			) {
 				$nested = sanitize_text_field( wp_unslash( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) );
 			}
 			// phpcs:enable WordPress.Security.NonceVerification.Recommended

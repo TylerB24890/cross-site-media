@@ -19,6 +19,10 @@
       "CrossSiteMedia\\": "src/"
     }
   },
+  "scripts": {
+    "lint": "./vendor/bin/phpcs --standard=./phpcs.xml",
+    "lint-fix": "./vendor/bin/phpcbf --standard=./phpcs.xml"
+  },
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true

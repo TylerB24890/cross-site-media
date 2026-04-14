@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginCore module.
+ * The main plugin class initializing the plugin and loading the necessary files.
  *
  * @package CrossSiteMedia
  */

@@ -1,14 +1,5 @@
 /**
- * Project-level webpack config.
- *
- * We extend 10up-toolkit's default config (required directly from the package)
- * rather than re-defining the build from scratch. The only modification is to
- * strip the bundled `webpackbar` plugin, which ships options that the pinned
- * webpack version rejects at runtime. Dropping the progress reporter doesn't
- * change the build output — it only affects terminal progress rendering.
- *
- * Everything else (entry points, loaders, WP externals, asset manifests) comes
- * unchanged from the toolkit.
+ * Webpack overrides.
  */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -16,6 +7,8 @@ const toolkitConfig = require('10up-toolkit/config/webpack.config');
 
 /**
  * Remove WebpackBar instances from a plugin list.
+ *
+ * @todo Remove this once 10up-toolkit updates the pinned webpack version.
  *
  * @param {Array} plugins Webpack plugins array.
  * @returns {Array} Filtered plugins.

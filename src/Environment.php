@@ -1,6 +1,7 @@
 <?php
 /**
  * Environment guard.
+ * Confirms the installed environment meets the minimum plugin requirements.
  *
  * @package CrossSiteMedia
  */
@@ -13,21 +14,29 @@ use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
 
 /**
- * Bails out gracefully if the plugin is activated on a single-site install.
- *
- * The other modules guard themselves on `is_multisite()` too, so this exists
- * primarily to surface a notice — without it, the plugin silently does nothing.
+ * Environment guard.
+ * This module only runs when the plugin is activated on a non-supported environment.
  */
 class Environment implements ModuleInterface {
 	use Module;
 
 	/**
-	 * Register only when viewing admin screens on a single-site install.
+	 * The minimum version of WordPress required for the plugin to work.
+	 */
+	public const MIN_WORDPRESS_VERSION = '6.7';
+
+	/**
+	 * The minimum version of PHP required for the plugin to work.
+	 */
+	public const MIN_PHP_VERSION = '8.2';
+
+	/**
+	 * Register only when viewing admin screens on a non-supported environment.
 	 *
 	 * @return bool
 	 */
 	public function can_register() {
-		return is_admin() && ! is_multisite();
+		return is_admin() && ( ! is_multisite() || ! $this->check_wp_version() || ! $this->check_php_version() );
 	}
 
 	/**
@@ -41,17 +50,52 @@ class Environment implements ModuleInterface {
 	}
 
 	/**
+	 * Checks if the WordPress version meets the minimum requirement.
+	 *
+	 * @return bool True if WordPress version is sufficient, false otherwise.
+	 */
+	public function check_wp_version(): bool {
+		return is_wp_version_compatible( self::MIN_WORDPRESS_VERSION );
+	}
+
+	/**
+	 * Checks if the PHP version meets the minimum requirement.
+	 *
+	 * @return bool True if PHP version is sufficient, false otherwise.
+	 */
+	public function check_php_version(): bool {
+		return is_php_version_compatible( self::MIN_PHP_VERSION );
+	}
+
+	/**
 	 * Render the "this plugin requires multisite" admin notice.
 	 *
 	 * @return void
 	 */
 	public function render_notice(): void {
-		printf(
-			'<div class="notice notice-warning"><p>%s</p></div>',
-			esc_html__(
-				'Cross Site Media requires WordPress Multisite. The plugin is loaded but inactive on this install.',
-				'cross-site-media'
-			)
-		);
+		$issues = [];
+
+		// Check if multisite is enabled.
+		if ( ! is_multisite() ) {
+			$issues[] = __( 'Multisite is not enabled.', 'cross-site-media' );
+		}
+
+		// Check if WordPress version is compatible.
+		if ( ! $this->check_wp_version() ) {
+			// translators: %1$s: The current WordPress version, %2$s: The minimum required WordPress version.
+			$issues[] = sprintf( __( 'WordPress version is not compatible. You are running WordPress %1$s, but Cross Site Media requires WordPress %2$s.', 'cross-site-media' ), get_bloginfo( 'version' ), self::MIN_WORDPRESS_VERSION );
+		}
+
+		// Check if PHP version is compatible.
+		if ( ! $this->check_php_version() ) {
+			// translators: %1$s: The current PHP version, %2$s: The minimum required PHP version.
+			$issues[] = sprintf( __( 'PHP version is not compatible. You are running PHP %1$s, but Cross Site Media requires PHP %2$s.', 'cross-site-media' ), phpversion(), self::MIN_PHP_VERSION );
+		}
+
+		if ( ! empty( $issues ) ) {
+			// translators: %s: A list of the issues with the environment.
+			$message = sprintf( "There are issues with your environment preventing Cross Site Media from working.\n\n%s", implode( "\n", $issues ) );
+			wp_admin_notice( $message, [ 'type' => 'error' ] );
+		}
 	}
 }

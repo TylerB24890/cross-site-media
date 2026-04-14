@@ -1,6 +1,6 @@
 <?php
 /**
- * Decorates attachment-for-JS payloads when we're serving from a switched blog.
+ * Prepare the cross-site media attachment for the media frame.
  *
  * @package CrossSiteMedia
  */
@@ -9,17 +9,12 @@ declare( strict_types = 1 );
 
 namespace CrossSiteMedia\Http;
 
+use WP_Post;
 use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
 
 /**
- * When an attachment is being prepared for a media-frame response and we are currently
- * inside a switch_to_blog() (because MediaAjaxProxy or RestMediaProxy switched us),
- * tag the response with origin metadata. The JS side reads these flags to:
- *
- *   - decide whether to enable / disable the details-pane edit fields,
- *   - know which (blog_id, attachment_id) pair to pass to the sideload endpoint
- *     when the user actually selects/inserts the item.
+ * PrepareAttachmentFilter class.
  */
 class PrepareAttachmentFilter implements ModuleInterface {
 	use Module;
@@ -45,20 +40,22 @@ class PrepareAttachmentFilter implements ModuleInterface {
 	/**
 	 * Add crossSiteMedia origin metadata when serving an attachment from a switched blog.
 	 *
-	 * @param array<string,mixed> $response   Prepared response.
-	 * @param \WP_Post            $attachment Attachment post (in current — possibly switched — context).
+	 * @param array   $response   Prepared response.
+	 * @param WP_Post $attachment Attachment post (in current — possibly switched — context).
 	 *
-	 * @return array<string,mixed>
+	 * @return array
 	 */
-	public function decorate( array $response, \WP_Post $attachment ): array {
-		// Only decorate when we are operating against a switched-to blog.
+	public function decorate( array $response, WP_Post $attachment ): array {
+		// Only decorate when we are operating against a switched blog.
 		if ( ! ms_is_switched() ) {
 			return $response;
 		}
 
+		// Get the current blog ID and site information.
 		$blog_id = (int) get_current_blog_id();
 		$site    = get_site( $blog_id );
 
+		// Add the cross-site media metadata to the response.
 		$response['crossSiteMedia'] = [
 			'sourceBlogId'    => $blog_id,
 			'sourceAttachId'  => (int) $attachment->ID,

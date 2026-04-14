@@ -1,6 +1,6 @@
 <?php
 /**
- * admin-ajax proxy that switches blogs for core media actions when requested.
+ * AJAX proxy that switches blogs for core media actions when requested.
  *
  * @package CrossSiteMedia
  */
@@ -14,24 +14,17 @@ use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
 
 /**
- * The "switch before core runs" trick borrowed from humanmade/network-media-library.
+ * MediaAjaxProxy class.
  *
- * For each media action core registers under wp_ajax_*, we hook at priority 0 to read
- * `cross_site_blog_id` off the request, validate the user can access that blog, and
- * `switch_to_blog()` so the default core handler queries / mutates the right database.
- *
- * We restore the original blog on `shutdown` so any post-action hooks run in the
- * expected context. Core's own action handlers terminate via `wp_send_json_*()`, so
- * shutdown is the right place to clean up.
+ * Hook into every media action at priority 0 to read `cross_site_blog_id` off the request.
+ * If it exists, we validate the user can access that blog, and switch to that blog.
  */
 class MediaAjaxProxy implements ModuleInterface {
 	use Module;
 
 	/**
 	 * Core actions whose handlers query or mutate the media library.
-	 *
-	 * Mirrors the list NML hooks; we keep them all so behavior parity with
-	 * "browsing another site's library natively" stays tight.
+	 * We keep all actions to retain behavior parity with the original media library.
 	 */
 	private const PROXIED_ACTIONS = [
 		'query-attachments',
@@ -39,6 +32,7 @@ class MediaAjaxProxy implements ModuleInterface {
 		'save-attachment',
 		'save-attachment-compat',
 		'send-attachment-to-editor',
+		'set-attachment-thumbnail',
 		'image-editor',
 		'imgedit-preview',
 		'crop-image',
@@ -69,9 +63,6 @@ class MediaAjaxProxy implements ModuleInterface {
 		foreach ( self::PROXIED_ACTIONS as $action ) {
 			add_action( "wp_ajax_{$action}", [ $this, 'maybe_switch' ], 0 );
 		}
-
-		// `set-attachment-thumbnail` (used by media frame) lives behind a different action name.
-		add_action( 'wp_ajax_set-attachment-thumbnail', [ $this, 'maybe_switch' ], 0 );
 
 		add_action( 'shutdown', [ $this, 'restore_all' ], 0 );
 	}

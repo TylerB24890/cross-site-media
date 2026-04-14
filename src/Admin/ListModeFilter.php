@@ -1,6 +1,10 @@
 <?php
 /**
  * Subsite filter for the Media Library list-mode screen.
+ * Adds a select element to the Media Library list-mode to navigate between subsites.
+ *
+ * Grid mode is handled by `MediaAssets` + the `MediaFrame.Manage` JS extension;
+ * List mode is plain HTML, so we need a server-side path here.
  *
  * @package CrossSiteMedia
  */
@@ -14,17 +18,7 @@ use TenupFramework\Module;
 use TenupFramework\ModuleInterface;
 
 /**
- * Adds a "Show media from" <select> to upload.php's list-mode filter bar and
- * — when a subsite is selected — switches to that blog early enough that the
- * `WP_Media_List_Table` query runs against it.
- *
- * Grid mode is handled by `MediaAssets` + the `MediaFrame.Manage` JS extension;
- * list mode is plain WP-rendered HTML, so we need a server-side path here.
- *
- * Trade-off: switching the blog during `load-upload.php` means the admin bar
- * and a few admin chrome details reflect the source site for the rest of the
- * request. That's intentional — attachment edit links auto-route to the
- * source site's `post.php?post=…` so users can act on the items they see.
+ * ListModeFilter class.
  */
 class ListModeFilter implements ModuleInterface {
 	use Module;
@@ -38,9 +32,6 @@ class ListModeFilter implements ModuleInterface {
 
 	/**
 	 * Blog id the request originally landed on, captured before we switch.
-	 * Used to exclude the *original* site from the subsite dropdown after the
-	 * switch (otherwise we'd hide the site the user just selected, since it
-	 * becomes `get_current_blog_id()` post-switch).
 	 *
 	 * @var int
 	 */
@@ -56,8 +47,7 @@ class ListModeFilter implements ModuleInterface {
 	}
 
 	/**
-	 * Hook the upload.php loader, the list-table filter slot, and shutdown
-	 * cleanup.
+	 * Hook into WP.
 	 *
 	 * @return void
 	 */
@@ -68,8 +58,7 @@ class ListModeFilter implements ModuleInterface {
 	}
 
 	/**
-	 * If we're loading upload.php in list mode and a valid subsite was
-	 * requested, switch to that blog before the list table is built.
+	 * Switch to the requested blog before the list table is built.
 	 *
 	 * @return void
 	 */
@@ -79,11 +68,7 @@ class ListModeFilter implements ModuleInterface {
 		}
 
 		$blog_id = AccessControl::requested_blog_id();
-		if ( ! $blog_id ) {
-			return;
-		}
-
-		if ( ! AccessControl::user_can_browse( $blog_id ) ) {
+		if ( ! $blog_id || ! AccessControl::user_can_browse( $blog_id ) ) {
 			return;
 		}
 
@@ -93,8 +78,7 @@ class ListModeFilter implements ModuleInterface {
 	}
 
 	/**
-	 * Pair the `switch_to_blog` from `maybe_switch` with a restore at the end
-	 * of the request.
+	 * Restore the original blog after the request.
 	 *
 	 * @return void
 	 */
@@ -106,13 +90,10 @@ class ListModeFilter implements ModuleInterface {
 	}
 
 	/**
-	 * Render the subsite <select> inside the Media list table's filter bar.
-	 *
-	 * `restrict_manage_posts` fires on every list-table screen; we scope to
-	 * post_type=attachment + the upload screen so we don't pollute Posts, etc.
+	 * Render the subsite select inside the Media list filter bar.
 	 *
 	 * @param string $post_type Current list-table post type.
-	 * @param string $which     'top' | 'bottom' | 'bar' (Media uses 'bar').
+	 * @param string $which     'top' | 'bottom' | 'bar'.
 	 *
 	 * @return void
 	 */
@@ -120,6 +101,8 @@ class ListModeFilter implements ModuleInterface {
 		if ( 'attachment' !== $post_type ) {
 			return;
 		}
+
+		// Only render in the filter bar of the media library.
 		if ( 'bar' !== $which ) {
 			return;
 		}
@@ -129,17 +112,14 @@ class ListModeFilter implements ModuleInterface {
 			return;
 		}
 
-		// Pass the original (pre-switch) blog id so the now-current blog
-		// stays in the dropdown — otherwise the user can't see what they
-		// just selected.
+		// Pass the original (pre-switch) blog id so the user can see what they just selected.
 		$exclude  = $this->switched ? $this->original_blog_id : null;
 		$subsites = AccessControl::accessible_subsites( $exclude );
 		if ( empty( $subsites ) ) {
 			return;
 		}
 
-		// Selected blog reflects either the active switch (so the dropdown
-		// stays in sync after submit) or any pending request param.
+		// Selected blog reflects either the active switch or any pending request param.
 		$selected = $this->switched ? get_current_blog_id() : AccessControl::requested_blog_id();
 
 		printf(
@@ -152,8 +132,10 @@ class ListModeFilter implements ModuleInterface {
 		);
 		printf(
 			'<option value="">%s</option>',
-			esc_html__( 'This site', 'cross-site-media' )
+			esc_html__( 'Current site', 'cross-site-media' )
 		);
+
+		// Render the select options for each subsite.
 		foreach ( $subsites as $site ) {
 			printf(
 				'<option value="%d" %s>%s</option>',
@@ -166,8 +148,7 @@ class ListModeFilter implements ModuleInterface {
 	}
 
 	/**
-	 * Are we on upload.php with `mode=list` (or has the user persisted list
-	 * mode as their preference)?
+	 * Check if we're in list-mode on the Media Library screen.
 	 *
 	 * @return bool
 	 */
@@ -183,6 +164,7 @@ class ListModeFilter implements ModuleInterface {
 		if ( ! $user_id ) {
 			return false;
 		}
+
 		$pref = get_user_option( 'media_library_mode', $user_id );
 		return 'list' === $pref;
 	}
