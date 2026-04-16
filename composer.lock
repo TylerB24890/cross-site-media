@@ -4,48 +4,8 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "e09da57dce01a0207c1a8ab3361805ba",
+	"content-hash": "2ebfeec55e674b720ba51b2a5ff4c750",
 	"packages": [
-		{
-			"name": "10up/phpcs-composer",
-			"version": "3.0.1",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/10up/phpcs-composer.git",
-				"reference": "ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/10up/phpcs-composer/zipball/ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4",
-				"reference": "ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4",
-				"shasum": ""
-			},
-			"require": {
-				"automattic/vipwpcs": "^3.0",
-				"phpcompatibility/phpcompatibility-wp": "^2"
-			},
-			"require-dev": {
-				"dealerdirect/phpcodesniffer-composer-installer": "*",
-				"phpcompatibility/php-compatibility": "10.0.0-alpha2 as 9.99.99"
-			},
-			"type": "phpcodesniffer-standard",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "10up",
-					"homepage": "https://10up.com/"
-				}
-			],
-			"description": "10up's PHP CodeSniffer Ruleset",
-			"support": {
-				"issues": "https://github.com/10up/phpcs-composer/issues",
-				"source": "https://github.com/10up/phpcs-composer/tree/3.0.1"
-			},
-			"time": "2025-12-09T17:31:17+00:00"
-		},
 		{
 			"name": "10up/wp-framework",
 			"version": "1.3.1",
@@ -107,156 +67,6 @@
 				"source": "https://github.com/10up/wp-framework/tree/1.3.1"
 			},
 			"time": "2025-11-25T11:17:29+00:00"
-		},
-		{
-			"name": "automattic/vipwpcs",
-			"version": "3.0.1",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/Automattic/VIP-Coding-Standards.git",
-				"reference": "2b1d206d81b74ed999023cffd924f862ff2753c8"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/2b1d206d81b74ed999023cffd924f862ff2753c8",
-				"reference": "2b1d206d81b74ed999023cffd924f862ff2753c8",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=5.4",
-				"phpcsstandards/phpcsextra": "^1.2.1",
-				"phpcsstandards/phpcsutils": "^1.0.11",
-				"sirbrillig/phpcs-variable-analysis": "^2.11.18",
-				"squizlabs/php_codesniffer": "^3.9.2",
-				"wp-coding-standards/wpcs": "^3.1.0"
-			},
-			"require-dev": {
-				"php-parallel-lint/php-console-highlighter": "^1.0.0",
-				"php-parallel-lint/php-parallel-lint": "^1.3.2",
-				"phpcompatibility/php-compatibility": "^9",
-				"phpcsstandards/phpcsdevtools": "^1.0",
-				"phpunit/phpunit": "^4 || ^5 || ^6 || ^7 || ^8 || ^9"
-			},
-			"type": "phpcodesniffer-standard",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Contributors",
-					"homepage": "https://github.com/Automattic/VIP-Coding-Standards/graphs/contributors"
-				}
-			],
-			"description": "PHP_CodeSniffer rules (sniffs) to enforce WordPress VIP minimum coding conventions",
-			"keywords": [
-				"phpcs",
-				"standards",
-				"static analysis",
-				"wordpress"
-			],
-			"support": {
-				"issues": "https://github.com/Automattic/VIP-Coding-Standards/issues",
-				"source": "https://github.com/Automattic/VIP-Coding-Standards",
-				"wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
-			},
-			"time": "2024-05-10T20:31:09+00:00"
-		},
-		{
-			"name": "dealerdirect/phpcodesniffer-composer-installer",
-			"version": "v1.2.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/PHPCSStandards/composer-installer.git",
-				"reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
-				"reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
-				"shasum": ""
-			},
-			"require": {
-				"composer-plugin-api": "^2.2",
-				"php": ">=5.4",
-				"squizlabs/php_codesniffer": "^3.1.0 || ^4.0"
-			},
-			"require-dev": {
-				"composer/composer": "^2.2",
-				"ext-json": "*",
-				"ext-zip": "*",
-				"php-parallel-lint/php-parallel-lint": "^1.4.0",
-				"phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
-				"yoast/phpunit-polyfills": "^1.0"
-			},
-			"type": "composer-plugin",
-			"extra": {
-				"class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
-			},
-			"autoload": {
-				"psr-4": {
-					"PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Franck Nijhof",
-					"email": "opensource@frenck.dev",
-					"homepage": "https://frenck.dev",
-					"role": "Open source developer"
-				},
-				{
-					"name": "Contributors",
-					"homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
-				}
-			],
-			"description": "PHP_CodeSniffer Standards Composer Installer Plugin",
-			"keywords": [
-				"PHPCodeSniffer",
-				"PHP_CodeSniffer",
-				"code quality",
-				"codesniffer",
-				"composer",
-				"installer",
-				"phpcbf",
-				"phpcs",
-				"plugin",
-				"qa",
-				"quality",
-				"standard",
-				"standards",
-				"style guide",
-				"stylecheck",
-				"tests"
-			],
-			"support": {
-				"issues": "https://github.com/PHPCSStandards/composer-installer/issues",
-				"security": "https://github.com/PHPCSStandards/composer-installer/security/policy",
-				"source": "https://github.com/PHPCSStandards/composer-installer"
-			},
-			"funding": [
-				{
-					"url": "https://github.com/PHPCSStandards",
-					"type": "github"
-				},
-				{
-					"url": "https://github.com/jrfnl",
-					"type": "github"
-				},
-				{
-					"url": "https://opencollective.com/php_codesniffer",
-					"type": "open_collective"
-				},
-				{
-					"url": "https://thanks.dev/u/gh/phpcsstandards",
-					"type": "thanks_dev"
-				}
-			],
-			"time": "2025-11-11T04:32:07+00:00"
 		},
 		{
 			"name": "illuminate/collections",
@@ -456,6 +266,768 @@
 				"source": "https://github.com/laravel/framework"
 			},
 			"time": "2024-07-23T16:31:01+00:00"
+		},
+		{
+			"name": "psr/container",
+			"version": "2.0.2",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-fig/container.git",
+				"reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+				"reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=7.4.0"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "2.0.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Psr\\Container\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "PHP-FIG",
+					"homepage": "https://www.php-fig.org/"
+				}
+			],
+			"description": "Common Container Interface (PHP FIG PSR-11)",
+			"homepage": "https://github.com/php-fig/container",
+			"keywords": [
+				"PSR-11",
+				"container",
+				"container-interface",
+				"container-interop",
+				"psr"
+			],
+			"support": {
+				"issues": "https://github.com/php-fig/container/issues",
+				"source": "https://github.com/php-fig/container/tree/2.0.2"
+			},
+			"time": "2021-11-05T16:47:00+00:00"
+		},
+		{
+			"name": "psr/simple-cache",
+			"version": "3.0.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-fig/simple-cache.git",
+				"reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
+				"reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=8.0.0"
+			},
+			"type": "library",
+			"extra": {
+				"branch-alias": {
+					"dev-master": "3.0.x-dev"
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Psr\\SimpleCache\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "PHP-FIG",
+					"homepage": "https://www.php-fig.org/"
+				}
+			],
+			"description": "Common interfaces for simple caching",
+			"keywords": [
+				"cache",
+				"caching",
+				"psr",
+				"psr-16",
+				"simple-cache"
+			],
+			"support": {
+				"source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
+			},
+			"time": "2021-10-29T13:26:27+00:00"
+		},
+		{
+			"name": "spatie/laravel-package-tools",
+			"version": "1.92.7",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/spatie/laravel-package-tools.git",
+				"reference": "f09a799850b1ed765103a4f0b4355006360c49a5"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f09a799850b1ed765103a4f0b4355006360c49a5",
+				"reference": "f09a799850b1ed765103a4f0b4355006360c49a5",
+				"shasum": ""
+			},
+			"require": {
+				"illuminate/contracts": "^9.28|^10.0|^11.0|^12.0",
+				"php": "^8.0"
+			},
+			"require-dev": {
+				"mockery/mockery": "^1.5",
+				"orchestra/testbench": "^7.7|^8.0|^9.0|^10.0",
+				"pestphp/pest": "^1.23|^2.1|^3.1",
+				"phpunit/php-code-coverage": "^9.0|^10.0|^11.0",
+				"phpunit/phpunit": "^9.5.24|^10.5|^11.5",
+				"spatie/pest-plugin-test-time": "^1.1|^2.2"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Spatie\\LaravelPackageTools\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Freek Van der Herten",
+					"email": "freek@spatie.be",
+					"role": "Developer"
+				}
+			],
+			"description": "Tools for creating Laravel packages",
+			"homepage": "https://github.com/spatie/laravel-package-tools",
+			"keywords": [
+				"laravel-package-tools",
+				"spatie"
+			],
+			"support": {
+				"issues": "https://github.com/spatie/laravel-package-tools/issues",
+				"source": "https://github.com/spatie/laravel-package-tools/tree/1.92.7"
+			},
+			"funding": [
+				{
+					"url": "https://github.com/spatie",
+					"type": "github"
+				}
+			],
+			"time": "2025-07-17T15:46:43+00:00"
+		},
+		{
+			"name": "spatie/php-structure-discoverer",
+			"version": "2.3.2",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/spatie/php-structure-discoverer.git",
+				"reference": "6c46e069349c7f2f6ebbe00429332c9e6b70fa92"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/spatie/php-structure-discoverer/zipball/6c46e069349c7f2f6ebbe00429332c9e6b70fa92",
+				"reference": "6c46e069349c7f2f6ebbe00429332c9e6b70fa92",
+				"shasum": ""
+			},
+			"require": {
+				"illuminate/collections": "^10.0|^11.0|^12.0",
+				"php": "^8.1",
+				"spatie/laravel-package-tools": "^1.4.3",
+				"symfony/finder": "^6.0|^7.0"
+			},
+			"require-dev": {
+				"amphp/parallel": "^2.2",
+				"illuminate/console": "^10.0|^11.0|^12.0",
+				"laravel/pint": "^1.0",
+				"nunomaduro/collision": "^7.0|^8.0",
+				"orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
+				"pestphp/pest": "^2.0|^3.0",
+				"pestphp/pest-plugin-laravel": "^2.0|^3.0",
+				"phpstan/extension-installer": "^1.1",
+				"phpstan/phpstan-deprecation-rules": "^1.0",
+				"phpstan/phpstan-phpunit": "^1.0",
+				"phpunit/phpunit": "^9.5|^10.0|^11.5.3",
+				"spatie/laravel-ray": "^1.26"
+			},
+			"suggest": {
+				"amphp/parallel": "When you want to use the Parallel discover worker"
+			},
+			"type": "library",
+			"extra": {
+				"laravel": {
+					"providers": [
+						"Spatie\\StructureDiscoverer\\StructureDiscovererServiceProvider"
+					]
+				}
+			},
+			"autoload": {
+				"psr-4": {
+					"Spatie\\StructureDiscoverer\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Ruben Van Assche",
+					"email": "ruben@spatie.be",
+					"role": "Developer"
+				}
+			],
+			"description": "Automatically discover structures within your PHP application",
+			"homepage": "https://github.com/spatie/php-structure-discoverer",
+			"keywords": [
+				"discover",
+				"laravel",
+				"php",
+				"php-structure-discoverer"
+			],
+			"support": {
+				"issues": "https://github.com/spatie/php-structure-discoverer/issues",
+				"source": "https://github.com/spatie/php-structure-discoverer/tree/2.3.2"
+			},
+			"funding": [
+				{
+					"url": "https://github.com/LaravelAutoDiscoverer",
+					"type": "github"
+				}
+			],
+			"time": "2025-09-22T14:58:17+00:00"
+		},
+		{
+			"name": "symfony/finder",
+			"version": "v7.3.5",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/symfony/finder.git",
+				"reference": "9f696d2f1e340484b4683f7853b273abff94421f"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/symfony/finder/zipball/9f696d2f1e340484b4683f7853b273abff94421f",
+				"reference": "9f696d2f1e340484b4683f7853b273abff94421f",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=8.2"
+			},
+			"require-dev": {
+				"symfony/filesystem": "^6.4|^7.0"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Symfony\\Component\\Finder\\": ""
+				},
+				"exclude-from-classmap": [
+					"/Tests/"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Fabien Potencier",
+					"email": "fabien@symfony.com"
+				},
+				{
+					"name": "Symfony Community",
+					"homepage": "https://symfony.com/contributors"
+				}
+			],
+			"description": "Finds files and directories via an intuitive fluent interface",
+			"homepage": "https://symfony.com",
+			"support": {
+				"source": "https://github.com/symfony/finder/tree/v7.3.5"
+			},
+			"funding": [
+				{
+					"url": "https://symfony.com/sponsor",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/fabpot",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/nicolas-grekas",
+					"type": "github"
+				},
+				{
+					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+					"type": "tidelift"
+				}
+			],
+			"time": "2025-10-15T18:45:57+00:00"
+		},
+		{
+			"name": "symfony/polyfill-php84",
+			"version": "v1.33.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/symfony/polyfill-php84.git",
+				"reference": "d8ced4d875142b6a7426000426b8abc631d6b191"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/d8ced4d875142b6a7426000426b8abc631d6b191",
+				"reference": "d8ced4d875142b6a7426000426b8abc631d6b191",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=7.2"
+			},
+			"type": "library",
+			"extra": {
+				"thanks": {
+					"url": "https://github.com/symfony/polyfill",
+					"name": "symfony/polyfill"
+				}
+			},
+			"autoload": {
+				"files": [
+					"bootstrap.php"
+				],
+				"psr-4": {
+					"Symfony\\Polyfill\\Php84\\": ""
+				},
+				"classmap": [
+					"Resources/stubs"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Nicolas Grekas",
+					"email": "p@tchwork.com"
+				},
+				{
+					"name": "Symfony Community",
+					"homepage": "https://symfony.com/contributors"
+				}
+			],
+			"description": "Symfony polyfill backporting some PHP 8.4+ features to lower PHP versions",
+			"homepage": "https://symfony.com",
+			"keywords": [
+				"compatibility",
+				"polyfill",
+				"portable",
+				"shim"
+			],
+			"support": {
+				"source": "https://github.com/symfony/polyfill-php84/tree/v1.33.0"
+			},
+			"funding": [
+				{
+					"url": "https://symfony.com/sponsor",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/fabpot",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/nicolas-grekas",
+					"type": "github"
+				},
+				{
+					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+					"type": "tidelift"
+				}
+			],
+			"time": "2025-06-24T13:30:11+00:00"
+		},
+		{
+			"name": "symfony/polyfill-php85",
+			"version": "v1.33.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/symfony/polyfill-php85.git",
+				"reference": "d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/symfony/polyfill-php85/zipball/d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91",
+				"reference": "d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=7.2"
+			},
+			"type": "library",
+			"extra": {
+				"thanks": {
+					"url": "https://github.com/symfony/polyfill",
+					"name": "symfony/polyfill"
+				}
+			},
+			"autoload": {
+				"files": [
+					"bootstrap.php"
+				],
+				"psr-4": {
+					"Symfony\\Polyfill\\Php85\\": ""
+				},
+				"classmap": [
+					"Resources/stubs"
+				]
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Nicolas Grekas",
+					"email": "p@tchwork.com"
+				},
+				{
+					"name": "Symfony Community",
+					"homepage": "https://symfony.com/contributors"
+				}
+			],
+			"description": "Symfony polyfill backporting some PHP 8.5+ features to lower PHP versions",
+			"homepage": "https://symfony.com",
+			"keywords": [
+				"compatibility",
+				"polyfill",
+				"portable",
+				"shim"
+			],
+			"support": {
+				"source": "https://github.com/symfony/polyfill-php85/tree/v1.33.0"
+			},
+			"funding": [
+				{
+					"url": "https://symfony.com/sponsor",
+					"type": "custom"
+				},
+				{
+					"url": "https://github.com/fabpot",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/nicolas-grekas",
+					"type": "github"
+				},
+				{
+					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+					"type": "tidelift"
+				}
+			],
+			"time": "2025-06-23T16:12:55+00:00"
+		}
+	],
+	"packages-dev": [
+		{
+			"name": "10up/phpcs-composer",
+			"version": "3.0.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/10up/phpcs-composer.git",
+				"reference": "ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/10up/phpcs-composer/zipball/ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4",
+				"reference": "ed5f6d4e7dc090338cc86b5925fb961b21e4e4d4",
+				"shasum": ""
+			},
+			"require": {
+				"automattic/vipwpcs": "^3.0",
+				"phpcompatibility/phpcompatibility-wp": "^2"
+			},
+			"require-dev": {
+				"dealerdirect/phpcodesniffer-composer-installer": "*",
+				"phpcompatibility/php-compatibility": "10.0.0-alpha2 as 9.99.99"
+			},
+			"type": "phpcodesniffer-standard",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "10up",
+					"homepage": "https://10up.com/"
+				}
+			],
+			"description": "10up's PHP CodeSniffer Ruleset",
+			"support": {
+				"issues": "https://github.com/10up/phpcs-composer/issues",
+				"source": "https://github.com/10up/phpcs-composer/tree/3.0.1"
+			},
+			"time": "2025-12-09T17:31:17+00:00"
+		},
+		{
+			"name": "automattic/vipwpcs",
+			"version": "3.0.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/Automattic/VIP-Coding-Standards.git",
+				"reference": "2b1d206d81b74ed999023cffd924f862ff2753c8"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/Automattic/VIP-Coding-Standards/zipball/2b1d206d81b74ed999023cffd924f862ff2753c8",
+				"reference": "2b1d206d81b74ed999023cffd924f862ff2753c8",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=5.4",
+				"phpcsstandards/phpcsextra": "^1.2.1",
+				"phpcsstandards/phpcsutils": "^1.0.11",
+				"sirbrillig/phpcs-variable-analysis": "^2.11.18",
+				"squizlabs/php_codesniffer": "^3.9.2",
+				"wp-coding-standards/wpcs": "^3.1.0"
+			},
+			"require-dev": {
+				"php-parallel-lint/php-console-highlighter": "^1.0.0",
+				"php-parallel-lint/php-parallel-lint": "^1.3.2",
+				"phpcompatibility/php-compatibility": "^9",
+				"phpcsstandards/phpcsdevtools": "^1.0",
+				"phpunit/phpunit": "^4 || ^5 || ^6 || ^7 || ^8 || ^9"
+			},
+			"type": "phpcodesniffer-standard",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Contributors",
+					"homepage": "https://github.com/Automattic/VIP-Coding-Standards/graphs/contributors"
+				}
+			],
+			"description": "PHP_CodeSniffer rules (sniffs) to enforce WordPress VIP minimum coding conventions",
+			"keywords": [
+				"phpcs",
+				"standards",
+				"static analysis",
+				"wordpress"
+			],
+			"support": {
+				"issues": "https://github.com/Automattic/VIP-Coding-Standards/issues",
+				"source": "https://github.com/Automattic/VIP-Coding-Standards",
+				"wiki": "https://github.com/Automattic/VIP-Coding-Standards/wiki"
+			},
+			"time": "2024-05-10T20:31:09+00:00"
+		},
+		{
+			"name": "dealerdirect/phpcodesniffer-composer-installer",
+			"version": "v1.2.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/PHPCSStandards/composer-installer.git",
+				"reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
+				"reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
+				"shasum": ""
+			},
+			"require": {
+				"composer-plugin-api": "^2.2",
+				"php": ">=5.4",
+				"squizlabs/php_codesniffer": "^3.1.0 || ^4.0"
+			},
+			"require-dev": {
+				"composer/composer": "^2.2",
+				"ext-json": "*",
+				"ext-zip": "*",
+				"php-parallel-lint/php-parallel-lint": "^1.4.0",
+				"phpcompatibility/php-compatibility": "^9.0 || ^10.0.0@dev",
+				"yoast/phpunit-polyfills": "^1.0"
+			},
+			"type": "composer-plugin",
+			"extra": {
+				"class": "PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\Plugin"
+			},
+			"autoload": {
+				"psr-4": {
+					"PHPCSStandards\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\": "src/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Franck Nijhof",
+					"email": "opensource@frenck.dev",
+					"homepage": "https://frenck.dev",
+					"role": "Open source developer"
+				},
+				{
+					"name": "Contributors",
+					"homepage": "https://github.com/PHPCSStandards/composer-installer/graphs/contributors"
+				}
+			],
+			"description": "PHP_CodeSniffer Standards Composer Installer Plugin",
+			"keywords": [
+				"PHPCodeSniffer",
+				"PHP_CodeSniffer",
+				"code quality",
+				"codesniffer",
+				"composer",
+				"installer",
+				"phpcbf",
+				"phpcs",
+				"plugin",
+				"qa",
+				"quality",
+				"standard",
+				"standards",
+				"style guide",
+				"stylecheck",
+				"tests"
+			],
+			"support": {
+				"issues": "https://github.com/PHPCSStandards/composer-installer/issues",
+				"security": "https://github.com/PHPCSStandards/composer-installer/security/policy",
+				"source": "https://github.com/PHPCSStandards/composer-installer"
+			},
+			"funding": [
+				{
+					"url": "https://github.com/PHPCSStandards",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/jrfnl",
+					"type": "github"
+				},
+				{
+					"url": "https://opencollective.com/php_codesniffer",
+					"type": "open_collective"
+				},
+				{
+					"url": "https://thanks.dev/u/gh/phpcsstandards",
+					"type": "thanks_dev"
+				}
+			],
+			"time": "2025-11-11T04:32:07+00:00"
+		},
+		{
+			"name": "php-stubs/wordpress-stubs",
+			"version": "v6.9.1",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-stubs/wordpress-stubs.git",
+				"reference": "f12220f303e0d7c0844c0e5e957b0c3cee48d2f7"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/f12220f303e0d7c0844c0e5e957b0c3cee48d2f7",
+				"reference": "f12220f303e0d7c0844c0e5e957b0c3cee48d2f7",
+				"shasum": ""
+			},
+			"conflict": {
+				"phpdocumentor/reflection-docblock": "5.6.1"
+			},
+			"require-dev": {
+				"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+				"nikic/php-parser": "^5.5",
+				"php": "^7.4 || ^8.0",
+				"php-stubs/generator": "^0.8.3",
+				"phpdocumentor/reflection-docblock": "^6.0",
+				"phpstan/phpstan": "^2.1",
+				"phpunit/phpunit": "^9.5",
+				"symfony/polyfill-php80": "*",
+				"szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^1.1.1",
+				"wp-coding-standards/wpcs": "3.1.0 as 2.3.0"
+			},
+			"suggest": {
+				"paragonie/sodium_compat": "Pure PHP implementation of libsodium",
+				"symfony/polyfill-php80": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
+				"szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+			},
+			"type": "library",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"description": "WordPress function and class declaration stubs for static analysis.",
+			"homepage": "https://github.com/php-stubs/wordpress-stubs",
+			"keywords": [
+				"PHPStan",
+				"static analysis",
+				"wordpress"
+			],
+			"support": {
+				"issues": "https://github.com/php-stubs/wordpress-stubs/issues",
+				"source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.9.1"
+			},
+			"time": "2026-02-03T19:29:21+00:00"
+		},
+		{
+			"name": "php-stubs/wp-cli-stubs",
+			"version": "v2.12.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/php-stubs/wp-cli-stubs.git",
+				"reference": "af16401e299a3fd2229bd0fa9a037638a4174a9d"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/php-stubs/wp-cli-stubs/zipball/af16401e299a3fd2229bd0fa9a037638a4174a9d",
+				"reference": "af16401e299a3fd2229bd0fa9a037638a4174a9d",
+				"shasum": ""
+			},
+			"require": {
+				"php-stubs/wordpress-stubs": "^4.7 || ^5.0 || ^6.0"
+			},
+			"require-dev": {
+				"php": "~7.3 || ~8.0",
+				"php-stubs/generator": "^0.8.0"
+			},
+			"suggest": {
+				"symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
+				"szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
+			},
+			"type": "library",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"description": "WP-CLI function and class declaration stubs for static analysis.",
+			"homepage": "https://github.com/php-stubs/wp-cli-stubs",
+			"keywords": [
+				"PHPStan",
+				"static analysis",
+				"wordpress",
+				"wp-cli"
+			],
+			"support": {
+				"issues": "https://github.com/php-stubs/wp-cli-stubs/issues",
+				"source": "https://github.com/php-stubs/wp-cli-stubs/tree/v2.12.0"
+			},
+			"time": "2025-06-10T09:58:05+00:00"
 		},
 		{
 			"name": "phpcompatibility/php-compatibility",
@@ -846,779 +1418,6 @@
 			"time": "2025-12-08T14:27:58+00:00"
 		},
 		{
-			"name": "psr/container",
-			"version": "2.0.2",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/php-fig/container.git",
-				"reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/php-fig/container/zipball/c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-				"reference": "c71ecc56dfe541dbd90c5360474fbc405f8d5963",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=7.4.0"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-master": "2.0.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"Psr\\Container\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "PHP-FIG",
-					"homepage": "https://www.php-fig.org/"
-				}
-			],
-			"description": "Common Container Interface (PHP FIG PSR-11)",
-			"homepage": "https://github.com/php-fig/container",
-			"keywords": [
-				"PSR-11",
-				"container",
-				"container-interface",
-				"container-interop",
-				"psr"
-			],
-			"support": {
-				"issues": "https://github.com/php-fig/container/issues",
-				"source": "https://github.com/php-fig/container/tree/2.0.2"
-			},
-			"time": "2021-11-05T16:47:00+00:00"
-		},
-		{
-			"name": "psr/simple-cache",
-			"version": "3.0.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/php-fig/simple-cache.git",
-				"reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/php-fig/simple-cache/zipball/764e0b3939f5ca87cb904f570ef9be2d78a07865",
-				"reference": "764e0b3939f5ca87cb904f570ef9be2d78a07865",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=8.0.0"
-			},
-			"type": "library",
-			"extra": {
-				"branch-alias": {
-					"dev-master": "3.0.x-dev"
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"Psr\\SimpleCache\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "PHP-FIG",
-					"homepage": "https://www.php-fig.org/"
-				}
-			],
-			"description": "Common interfaces for simple caching",
-			"keywords": [
-				"cache",
-				"caching",
-				"psr",
-				"psr-16",
-				"simple-cache"
-			],
-			"support": {
-				"source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
-			},
-			"time": "2021-10-29T13:26:27+00:00"
-		},
-		{
-			"name": "sirbrillig/phpcs-variable-analysis",
-			"version": "v2.13.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
-				"reference": "a15e970b8a0bf64cfa5e86d941f5e6b08855f369"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/a15e970b8a0bf64cfa5e86d941f5e6b08855f369",
-				"reference": "a15e970b8a0bf64cfa5e86d941f5e6b08855f369",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=5.4.0",
-				"squizlabs/php_codesniffer": "^3.5.7 || ^4.0.0"
-			},
-			"require-dev": {
-				"dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
-				"phpstan/phpstan": "^1.7 || ^2.0",
-				"phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0 || ^10.5.32 || ^11.3.3",
-				"vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0 || ^6.0 || ^7.0"
-			},
-			"type": "phpcodesniffer-standard",
-			"autoload": {
-				"psr-4": {
-					"VariableAnalysis\\": "VariableAnalysis/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"BSD-2-Clause"
-			],
-			"authors": [
-				{
-					"name": "Sam Graham",
-					"email": "php-codesniffer-variableanalysis@illusori.co.uk"
-				},
-				{
-					"name": "Payton Swick",
-					"email": "payton@foolord.com"
-				}
-			],
-			"description": "A PHPCS sniff to detect problems with variables.",
-			"keywords": [
-				"phpcs",
-				"static analysis"
-			],
-			"support": {
-				"issues": "https://github.com/sirbrillig/phpcs-variable-analysis/issues",
-				"source": "https://github.com/sirbrillig/phpcs-variable-analysis",
-				"wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
-			},
-			"time": "2025-09-30T22:22:48+00:00"
-		},
-		{
-			"name": "spatie/laravel-package-tools",
-			"version": "1.92.7",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/spatie/laravel-package-tools.git",
-				"reference": "f09a799850b1ed765103a4f0b4355006360c49a5"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/f09a799850b1ed765103a4f0b4355006360c49a5",
-				"reference": "f09a799850b1ed765103a4f0b4355006360c49a5",
-				"shasum": ""
-			},
-			"require": {
-				"illuminate/contracts": "^9.28|^10.0|^11.0|^12.0",
-				"php": "^8.0"
-			},
-			"require-dev": {
-				"mockery/mockery": "^1.5",
-				"orchestra/testbench": "^7.7|^8.0|^9.0|^10.0",
-				"pestphp/pest": "^1.23|^2.1|^3.1",
-				"phpunit/php-code-coverage": "^9.0|^10.0|^11.0",
-				"phpunit/phpunit": "^9.5.24|^10.5|^11.5",
-				"spatie/pest-plugin-test-time": "^1.1|^2.2"
-			},
-			"type": "library",
-			"autoload": {
-				"psr-4": {
-					"Spatie\\LaravelPackageTools\\": "src"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Freek Van der Herten",
-					"email": "freek@spatie.be",
-					"role": "Developer"
-				}
-			],
-			"description": "Tools for creating Laravel packages",
-			"homepage": "https://github.com/spatie/laravel-package-tools",
-			"keywords": [
-				"laravel-package-tools",
-				"spatie"
-			],
-			"support": {
-				"issues": "https://github.com/spatie/laravel-package-tools/issues",
-				"source": "https://github.com/spatie/laravel-package-tools/tree/1.92.7"
-			},
-			"funding": [
-				{
-					"url": "https://github.com/spatie",
-					"type": "github"
-				}
-			],
-			"time": "2025-07-17T15:46:43+00:00"
-		},
-		{
-			"name": "spatie/php-structure-discoverer",
-			"version": "2.3.2",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/spatie/php-structure-discoverer.git",
-				"reference": "6c46e069349c7f2f6ebbe00429332c9e6b70fa92"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/spatie/php-structure-discoverer/zipball/6c46e069349c7f2f6ebbe00429332c9e6b70fa92",
-				"reference": "6c46e069349c7f2f6ebbe00429332c9e6b70fa92",
-				"shasum": ""
-			},
-			"require": {
-				"illuminate/collections": "^10.0|^11.0|^12.0",
-				"php": "^8.1",
-				"spatie/laravel-package-tools": "^1.4.3",
-				"symfony/finder": "^6.0|^7.0"
-			},
-			"require-dev": {
-				"amphp/parallel": "^2.2",
-				"illuminate/console": "^10.0|^11.0|^12.0",
-				"laravel/pint": "^1.0",
-				"nunomaduro/collision": "^7.0|^8.0",
-				"orchestra/testbench": "^7.0|^8.0|^9.0|^10.0",
-				"pestphp/pest": "^2.0|^3.0",
-				"pestphp/pest-plugin-laravel": "^2.0|^3.0",
-				"phpstan/extension-installer": "^1.1",
-				"phpstan/phpstan-deprecation-rules": "^1.0",
-				"phpstan/phpstan-phpunit": "^1.0",
-				"phpunit/phpunit": "^9.5|^10.0|^11.5.3",
-				"spatie/laravel-ray": "^1.26"
-			},
-			"suggest": {
-				"amphp/parallel": "When you want to use the Parallel discover worker"
-			},
-			"type": "library",
-			"extra": {
-				"laravel": {
-					"providers": [
-						"Spatie\\StructureDiscoverer\\StructureDiscovererServiceProvider"
-					]
-				}
-			},
-			"autoload": {
-				"psr-4": {
-					"Spatie\\StructureDiscoverer\\": "src"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Ruben Van Assche",
-					"email": "ruben@spatie.be",
-					"role": "Developer"
-				}
-			],
-			"description": "Automatically discover structures within your PHP application",
-			"homepage": "https://github.com/spatie/php-structure-discoverer",
-			"keywords": [
-				"discover",
-				"laravel",
-				"php",
-				"php-structure-discoverer"
-			],
-			"support": {
-				"issues": "https://github.com/spatie/php-structure-discoverer/issues",
-				"source": "https://github.com/spatie/php-structure-discoverer/tree/2.3.2"
-			},
-			"funding": [
-				{
-					"url": "https://github.com/LaravelAutoDiscoverer",
-					"type": "github"
-				}
-			],
-			"time": "2025-09-22T14:58:17+00:00"
-		},
-		{
-			"name": "squizlabs/php_codesniffer",
-			"version": "3.13.5",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-				"reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
-				"reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
-				"shasum": ""
-			},
-			"require": {
-				"ext-simplexml": "*",
-				"ext-tokenizer": "*",
-				"ext-xmlwriter": "*",
-				"php": ">=5.4.0"
-			},
-			"require-dev": {
-				"phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.3.4"
-			},
-			"bin": [
-				"bin/phpcbf",
-				"bin/phpcs"
-			],
-			"type": "library",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"BSD-3-Clause"
-			],
-			"authors": [
-				{
-					"name": "Greg Sherwood",
-					"role": "Former lead"
-				},
-				{
-					"name": "Juliette Reinders Folmer",
-					"role": "Current lead"
-				},
-				{
-					"name": "Contributors",
-					"homepage": "https://github.com/PHPCSStandards/PHP_CodeSniffer/graphs/contributors"
-				}
-			],
-			"description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
-			"homepage": "https://github.com/PHPCSStandards/PHP_CodeSniffer",
-			"keywords": [
-				"phpcs",
-				"standards",
-				"static analysis"
-			],
-			"support": {
-				"issues": "https://github.com/PHPCSStandards/PHP_CodeSniffer/issues",
-				"security": "https://github.com/PHPCSStandards/PHP_CodeSniffer/security/policy",
-				"source": "https://github.com/PHPCSStandards/PHP_CodeSniffer",
-				"wiki": "https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki"
-			},
-			"funding": [
-				{
-					"url": "https://github.com/PHPCSStandards",
-					"type": "github"
-				},
-				{
-					"url": "https://github.com/jrfnl",
-					"type": "github"
-				},
-				{
-					"url": "https://opencollective.com/php_codesniffer",
-					"type": "open_collective"
-				},
-				{
-					"url": "https://thanks.dev/u/gh/phpcsstandards",
-					"type": "thanks_dev"
-				}
-			],
-			"time": "2025-11-04T16:30:35+00:00"
-		},
-		{
-			"name": "symfony/finder",
-			"version": "v7.3.5",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/symfony/finder.git",
-				"reference": "9f696d2f1e340484b4683f7853b273abff94421f"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/symfony/finder/zipball/9f696d2f1e340484b4683f7853b273abff94421f",
-				"reference": "9f696d2f1e340484b4683f7853b273abff94421f",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=8.2"
-			},
-			"require-dev": {
-				"symfony/filesystem": "^6.4|^7.0"
-			},
-			"type": "library",
-			"autoload": {
-				"psr-4": {
-					"Symfony\\Component\\Finder\\": ""
-				},
-				"exclude-from-classmap": [
-					"/Tests/"
-				]
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Fabien Potencier",
-					"email": "fabien@symfony.com"
-				},
-				{
-					"name": "Symfony Community",
-					"homepage": "https://symfony.com/contributors"
-				}
-			],
-			"description": "Finds files and directories via an intuitive fluent interface",
-			"homepage": "https://symfony.com",
-			"support": {
-				"source": "https://github.com/symfony/finder/tree/v7.3.5"
-			},
-			"funding": [
-				{
-					"url": "https://symfony.com/sponsor",
-					"type": "custom"
-				},
-				{
-					"url": "https://github.com/fabpot",
-					"type": "github"
-				},
-				{
-					"url": "https://github.com/nicolas-grekas",
-					"type": "github"
-				},
-				{
-					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-					"type": "tidelift"
-				}
-			],
-			"time": "2025-10-15T18:45:57+00:00"
-		},
-		{
-			"name": "symfony/polyfill-php84",
-			"version": "v1.33.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/symfony/polyfill-php84.git",
-				"reference": "d8ced4d875142b6a7426000426b8abc631d6b191"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/symfony/polyfill-php84/zipball/d8ced4d875142b6a7426000426b8abc631d6b191",
-				"reference": "d8ced4d875142b6a7426000426b8abc631d6b191",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=7.2"
-			},
-			"type": "library",
-			"extra": {
-				"thanks": {
-					"url": "https://github.com/symfony/polyfill",
-					"name": "symfony/polyfill"
-				}
-			},
-			"autoload": {
-				"files": [
-					"bootstrap.php"
-				],
-				"psr-4": {
-					"Symfony\\Polyfill\\Php84\\": ""
-				},
-				"classmap": [
-					"Resources/stubs"
-				]
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Nicolas Grekas",
-					"email": "p@tchwork.com"
-				},
-				{
-					"name": "Symfony Community",
-					"homepage": "https://symfony.com/contributors"
-				}
-			],
-			"description": "Symfony polyfill backporting some PHP 8.4+ features to lower PHP versions",
-			"homepage": "https://symfony.com",
-			"keywords": [
-				"compatibility",
-				"polyfill",
-				"portable",
-				"shim"
-			],
-			"support": {
-				"source": "https://github.com/symfony/polyfill-php84/tree/v1.33.0"
-			},
-			"funding": [
-				{
-					"url": "https://symfony.com/sponsor",
-					"type": "custom"
-				},
-				{
-					"url": "https://github.com/fabpot",
-					"type": "github"
-				},
-				{
-					"url": "https://github.com/nicolas-grekas",
-					"type": "github"
-				},
-				{
-					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-					"type": "tidelift"
-				}
-			],
-			"time": "2025-06-24T13:30:11+00:00"
-		},
-		{
-			"name": "symfony/polyfill-php85",
-			"version": "v1.33.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/symfony/polyfill-php85.git",
-				"reference": "d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/symfony/polyfill-php85/zipball/d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91",
-				"reference": "d4e5fcd4ab3d998ab16c0db48e6cbb9a01993f91",
-				"shasum": ""
-			},
-			"require": {
-				"php": ">=7.2"
-			},
-			"type": "library",
-			"extra": {
-				"thanks": {
-					"url": "https://github.com/symfony/polyfill",
-					"name": "symfony/polyfill"
-				}
-			},
-			"autoload": {
-				"files": [
-					"bootstrap.php"
-				],
-				"psr-4": {
-					"Symfony\\Polyfill\\Php85\\": ""
-				},
-				"classmap": [
-					"Resources/stubs"
-				]
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Nicolas Grekas",
-					"email": "p@tchwork.com"
-				},
-				{
-					"name": "Symfony Community",
-					"homepage": "https://symfony.com/contributors"
-				}
-			],
-			"description": "Symfony polyfill backporting some PHP 8.5+ features to lower PHP versions",
-			"homepage": "https://symfony.com",
-			"keywords": [
-				"compatibility",
-				"polyfill",
-				"portable",
-				"shim"
-			],
-			"support": {
-				"source": "https://github.com/symfony/polyfill-php85/tree/v1.33.0"
-			},
-			"funding": [
-				{
-					"url": "https://symfony.com/sponsor",
-					"type": "custom"
-				},
-				{
-					"url": "https://github.com/fabpot",
-					"type": "github"
-				},
-				{
-					"url": "https://github.com/nicolas-grekas",
-					"type": "github"
-				},
-				{
-					"url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-					"type": "tidelift"
-				}
-			],
-			"time": "2025-06-23T16:12:55+00:00"
-		},
-		{
-			"name": "wp-coding-standards/wpcs",
-			"version": "3.3.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
-				"reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
-				"reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
-				"shasum": ""
-			},
-			"require": {
-				"ext-filter": "*",
-				"ext-libxml": "*",
-				"ext-tokenizer": "*",
-				"ext-xmlreader": "*",
-				"php": ">=7.2",
-				"phpcsstandards/phpcsextra": "^1.5.0",
-				"phpcsstandards/phpcsutils": "^1.1.0",
-				"squizlabs/php_codesniffer": "^3.13.4"
-			},
-			"require-dev": {
-				"php-parallel-lint/php-console-highlighter": "^1.0.0",
-				"php-parallel-lint/php-parallel-lint": "^1.4.0",
-				"phpcompatibility/php-compatibility": "^10.0.0@dev",
-				"phpcsstandards/phpcsdevtools": "^1.2.0",
-				"phpunit/phpunit": "^8.0 || ^9.0"
-			},
-			"suggest": {
-				"ext-iconv": "For improved results",
-				"ext-mbstring": "For improved results"
-			},
-			"type": "phpcodesniffer-standard",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Contributors",
-					"homepage": "https://github.com/WordPress/WordPress-Coding-Standards/graphs/contributors"
-				}
-			],
-			"description": "PHP_CodeSniffer rules (sniffs) to enforce WordPress coding conventions",
-			"keywords": [
-				"phpcs",
-				"standards",
-				"static analysis",
-				"wordpress"
-			],
-			"support": {
-				"issues": "https://github.com/WordPress/WordPress-Coding-Standards/issues",
-				"source": "https://github.com/WordPress/WordPress-Coding-Standards",
-				"wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
-			},
-			"funding": [
-				{
-					"url": "https://opencollective.com/php_codesniffer",
-					"type": "custom"
-				}
-			],
-			"time": "2025-11-25T12:08:04+00:00"
-		}
-	],
-	"packages-dev": [
-		{
-			"name": "php-stubs/wordpress-stubs",
-			"version": "v6.9.1",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/php-stubs/wordpress-stubs.git",
-				"reference": "f12220f303e0d7c0844c0e5e957b0c3cee48d2f7"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/f12220f303e0d7c0844c0e5e957b0c3cee48d2f7",
-				"reference": "f12220f303e0d7c0844c0e5e957b0c3cee48d2f7",
-				"shasum": ""
-			},
-			"conflict": {
-				"phpdocumentor/reflection-docblock": "5.6.1"
-			},
-			"require-dev": {
-				"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
-				"nikic/php-parser": "^5.5",
-				"php": "^7.4 || ^8.0",
-				"php-stubs/generator": "^0.8.3",
-				"phpdocumentor/reflection-docblock": "^6.0",
-				"phpstan/phpstan": "^2.1",
-				"phpunit/phpunit": "^9.5",
-				"symfony/polyfill-php80": "*",
-				"szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^1.1.1",
-				"wp-coding-standards/wpcs": "3.1.0 as 2.3.0"
-			},
-			"suggest": {
-				"paragonie/sodium_compat": "Pure PHP implementation of libsodium",
-				"symfony/polyfill-php80": "Symfony polyfill backporting some PHP 8.0+ features to lower PHP versions",
-				"szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
-			},
-			"type": "library",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"description": "WordPress function and class declaration stubs for static analysis.",
-			"homepage": "https://github.com/php-stubs/wordpress-stubs",
-			"keywords": [
-				"PHPStan",
-				"static analysis",
-				"wordpress"
-			],
-			"support": {
-				"issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-				"source": "https://github.com/php-stubs/wordpress-stubs/tree/v6.9.1"
-			},
-			"time": "2026-02-03T19:29:21+00:00"
-		},
-		{
-			"name": "php-stubs/wp-cli-stubs",
-			"version": "v2.12.0",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/php-stubs/wp-cli-stubs.git",
-				"reference": "af16401e299a3fd2229bd0fa9a037638a4174a9d"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/php-stubs/wp-cli-stubs/zipball/af16401e299a3fd2229bd0fa9a037638a4174a9d",
-				"reference": "af16401e299a3fd2229bd0fa9a037638a4174a9d",
-				"shasum": ""
-			},
-			"require": {
-				"php-stubs/wordpress-stubs": "^4.7 || ^5.0 || ^6.0"
-			},
-			"require-dev": {
-				"php": "~7.3 || ~8.0",
-				"php-stubs/generator": "^0.8.0"
-			},
-			"suggest": {
-				"symfony/polyfill-php73": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
-				"szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
-			},
-			"type": "library",
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"description": "WP-CLI function and class declaration stubs for static analysis.",
-			"homepage": "https://github.com/php-stubs/wp-cli-stubs",
-			"keywords": [
-				"PHPStan",
-				"static analysis",
-				"wordpress",
-				"wp-cli"
-			],
-			"support": {
-				"issues": "https://github.com/php-stubs/wp-cli-stubs/issues",
-				"source": "https://github.com/php-stubs/wp-cli-stubs/tree/v2.12.0"
-			},
-			"time": "2025-06-10T09:58:05+00:00"
-		},
-		{
 			"name": "phpstan/phpstan",
 			"version": "2.1.48",
 			"dist": {
@@ -1722,6 +1521,141 @@
 			"time": "2026-02-09T13:21:14+00:00"
 		},
 		{
+			"name": "sirbrillig/phpcs-variable-analysis",
+			"version": "v2.13.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/sirbrillig/phpcs-variable-analysis.git",
+				"reference": "a15e970b8a0bf64cfa5e86d941f5e6b08855f369"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/sirbrillig/phpcs-variable-analysis/zipball/a15e970b8a0bf64cfa5e86d941f5e6b08855f369",
+				"reference": "a15e970b8a0bf64cfa5e86d941f5e6b08855f369",
+				"shasum": ""
+			},
+			"require": {
+				"php": ">=5.4.0",
+				"squizlabs/php_codesniffer": "^3.5.7 || ^4.0.0"
+			},
+			"require-dev": {
+				"dealerdirect/phpcodesniffer-composer-installer": "^0.7 || ^1.0",
+				"phpstan/phpstan": "^1.7 || ^2.0",
+				"phpunit/phpunit": "^4.8.36 || ^5.7.21 || ^6.5 || ^7.0 || ^8.0 || ^9.0 || ^10.5.32 || ^11.3.3",
+				"vimeo/psalm": "^0.2 || ^0.3 || ^1.1 || ^4.24 || ^5.0 || ^6.0 || ^7.0"
+			},
+			"type": "phpcodesniffer-standard",
+			"autoload": {
+				"psr-4": {
+					"VariableAnalysis\\": "VariableAnalysis/"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-2-Clause"
+			],
+			"authors": [
+				{
+					"name": "Sam Graham",
+					"email": "php-codesniffer-variableanalysis@illusori.co.uk"
+				},
+				{
+					"name": "Payton Swick",
+					"email": "payton@foolord.com"
+				}
+			],
+			"description": "A PHPCS sniff to detect problems with variables.",
+			"keywords": [
+				"phpcs",
+				"static analysis"
+			],
+			"support": {
+				"issues": "https://github.com/sirbrillig/phpcs-variable-analysis/issues",
+				"source": "https://github.com/sirbrillig/phpcs-variable-analysis",
+				"wiki": "https://github.com/sirbrillig/phpcs-variable-analysis/wiki"
+			},
+			"time": "2025-09-30T22:22:48+00:00"
+		},
+		{
+			"name": "squizlabs/php_codesniffer",
+			"version": "3.13.5",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
+				"reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
+				"reference": "0ca86845ce43291e8f5692c7356fccf3bcf02bf4",
+				"shasum": ""
+			},
+			"require": {
+				"ext-simplexml": "*",
+				"ext-tokenizer": "*",
+				"ext-xmlwriter": "*",
+				"php": ">=5.4.0"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.3.4"
+			},
+			"bin": [
+				"bin/phpcbf",
+				"bin/phpcs"
+			],
+			"type": "library",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"BSD-3-Clause"
+			],
+			"authors": [
+				{
+					"name": "Greg Sherwood",
+					"role": "Former lead"
+				},
+				{
+					"name": "Juliette Reinders Folmer",
+					"role": "Current lead"
+				},
+				{
+					"name": "Contributors",
+					"homepage": "https://github.com/PHPCSStandards/PHP_CodeSniffer/graphs/contributors"
+				}
+			],
+			"description": "PHP_CodeSniffer tokenizes PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+			"homepage": "https://github.com/PHPCSStandards/PHP_CodeSniffer",
+			"keywords": [
+				"phpcs",
+				"standards",
+				"static analysis"
+			],
+			"support": {
+				"issues": "https://github.com/PHPCSStandards/PHP_CodeSniffer/issues",
+				"security": "https://github.com/PHPCSStandards/PHP_CodeSniffer/security/policy",
+				"source": "https://github.com/PHPCSStandards/PHP_CodeSniffer",
+				"wiki": "https://github.com/PHPCSStandards/PHP_CodeSniffer/wiki"
+			},
+			"funding": [
+				{
+					"url": "https://github.com/PHPCSStandards",
+					"type": "github"
+				},
+				{
+					"url": "https://github.com/jrfnl",
+					"type": "github"
+				},
+				{
+					"url": "https://opencollective.com/php_codesniffer",
+					"type": "open_collective"
+				},
+				{
+					"url": "https://thanks.dev/u/gh/phpcsstandards",
+					"type": "thanks_dev"
+				}
+			],
+			"time": "2025-11-04T16:30:35+00:00"
+		},
+		{
 			"name": "szepeviktor/phpstan-wordpress",
 			"version": "v2.0.3",
 			"source": {
@@ -1783,6 +1717,72 @@
 				"source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v2.0.3"
 			},
 			"time": "2025-09-14T02:58:22+00:00"
+		},
+		{
+			"name": "wp-coding-standards/wpcs",
+			"version": "3.3.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/WordPress/WordPress-Coding-Standards.git",
+				"reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6"
+			},
+			"dist": {
+				"type": "zip",
+				"url": "https://api.github.com/repos/WordPress/WordPress-Coding-Standards/zipball/7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
+				"reference": "7795ec6fa05663d716a549d0b44e47ffc8b0d4a6",
+				"shasum": ""
+			},
+			"require": {
+				"ext-filter": "*",
+				"ext-libxml": "*",
+				"ext-tokenizer": "*",
+				"ext-xmlreader": "*",
+				"php": ">=7.2",
+				"phpcsstandards/phpcsextra": "^1.5.0",
+				"phpcsstandards/phpcsutils": "^1.1.0",
+				"squizlabs/php_codesniffer": "^3.13.4"
+			},
+			"require-dev": {
+				"php-parallel-lint/php-console-highlighter": "^1.0.0",
+				"php-parallel-lint/php-parallel-lint": "^1.4.0",
+				"phpcompatibility/php-compatibility": "^10.0.0@dev",
+				"phpcsstandards/phpcsdevtools": "^1.2.0",
+				"phpunit/phpunit": "^8.0 || ^9.0"
+			},
+			"suggest": {
+				"ext-iconv": "For improved results",
+				"ext-mbstring": "For improved results"
+			},
+			"type": "phpcodesniffer-standard",
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
+			"authors": [
+				{
+					"name": "Contributors",
+					"homepage": "https://github.com/WordPress/WordPress-Coding-Standards/graphs/contributors"
+				}
+			],
+			"description": "PHP_CodeSniffer rules (sniffs) to enforce WordPress coding conventions",
+			"keywords": [
+				"phpcs",
+				"standards",
+				"static analysis",
+				"wordpress"
+			],
+			"support": {
+				"issues": "https://github.com/WordPress/WordPress-Coding-Standards/issues",
+				"source": "https://github.com/WordPress/WordPress-Coding-Standards",
+				"wiki": "https://github.com/WordPress/WordPress-Coding-Standards/wiki"
+			},
+			"funding": [
+				{
+					"url": "https://opencollective.com/php_codesniffer",
+					"type": "custom"
+				}
+			],
+			"time": "2025-11-25T12:08:04+00:00"
 		}
 	],
 	"aliases": [],
