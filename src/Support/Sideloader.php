@@ -134,7 +134,8 @@ class Sideloader {
 				}
 
 				foreach ( (array) $values as $value ) {
-					update_post_meta( $attachment_id, $key, maybe_unserialize( $value ) );
+					$value = is_string( $value ) ? maybe_unserialize( $value ) : $value;
+					update_post_meta( $attachment_id, $key, $value );
 				}
 			}
 		}
