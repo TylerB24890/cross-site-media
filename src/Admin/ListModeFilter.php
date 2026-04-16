@@ -98,12 +98,7 @@ class ListModeFilter implements ModuleInterface {
 	 * @return void
 	 */
 	public function render_filter( $post_type, $which = 'top' ): void {
-		if ( 'attachment' !== $post_type ) {
-			return;
-		}
-
-		// Only render in the filter bar of the media library.
-		if ( 'bar' !== $which ) {
+		if ( 'attachment' !== $post_type || 'bar' !== $which ) {
 			return;
 		}
 

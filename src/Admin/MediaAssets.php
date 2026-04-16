@@ -132,7 +132,8 @@ class MediaAssets implements ModuleInterface {
 				'routerHeading'  => __( 'Subsites', 'cross-site-media' ),
 				'sideloading'    => __( 'Copying from subsite…', 'cross-site-media' ),
 				'sideloadFail'   => __( 'Could not copy the selected item from the subsite.', 'cross-site-media' ),
-				'badge'          => /* translators: %s: subsite name */ __( 'From %s', 'cross-site-media' ),
+				/* translators: %s: subsite name */
+				'badge'          => __( 'From %s', 'cross-site-media' ),
 				'manageLabel'    => __( 'Show media from', 'cross-site-media' ),
 				'manageThisSite' => __( 'Current site', 'cross-site-media' ),
 			],

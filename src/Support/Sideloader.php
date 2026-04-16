@@ -34,7 +34,11 @@ class Sideloader {
 	 */
 	public function sideload( int $source_blog_id, int $source_attachment ): int|WP_Error {
 		if ( $source_blog_id <= 0 || $source_attachment <= 0 ) {
-			return new WP_Error( 'cross_site_media_invalid_args', __( 'Invalid blog or attachment id.', 'cross-site-media' ) );
+			return new WP_Error(
+				'cross_site_media_invalid_args',
+				__( 'Invalid blog or attachment id.', 'cross-site-media' ),
+				[ 'status' => 400 ]
+			);
 		}
 
 		// Ensure we don't already have a local copy of this attachment.
@@ -56,12 +60,20 @@ class Sideloader {
 		// Copy the source file into a tmp file under the current site's uploads.
 		$tmp = wp_tempnam( $source['filename'] );
 		if ( ! $tmp ) {
-			return new WP_Error( 'cross_site_media_tmp_failed', __( 'Unable to allocate temporary file.', 'cross-site-media' ) );
+			return new WP_Error(
+				'cross_site_media_tmp_failed',
+				__( 'Unable to allocate temporary file.', 'cross-site-media' ),
+				[ 'status' => 500 ]
+			);
 		}
 
 		if ( ! @copy( $source['path'], $tmp ) ) { // phpcs:ignore WordPress.PHP.NoSilencedErrors
 			wp_delete_file( $tmp );
-			return new WP_Error( 'cross_site_media_copy_failed', __( 'Failed to copy source media file.', 'cross-site-media' ) );
+			return new WP_Error(
+				'cross_site_media_copy_failed',
+				__( 'Failed to copy source media file.', 'cross-site-media' ),
+				[ 'status' => 500 ]
+			);
 		}
 
 		$file_array = [
@@ -75,6 +87,16 @@ class Sideloader {
 			'post_content' => $source['description'],
 			'post_excerpt' => $source['caption'],
 		];
+
+		/**
+		 * Fires before a sideload operation.
+		 *
+		 * @param array $file_array        The file array.
+		 * @param array $post_data         The post data.
+		 * @param int   $source_blog_id    The ID of the source blog.
+		 * @param int   $source_attachment The ID of the source attachment.
+		 */
+		do_action( 'cross_site_media_before_sideload', $file_array, $post_data, $source_blog_id, $source_attachment );
 
 		$attachment_id = media_handle_sideload( $file_array, 0, null, $post_data );
 
@@ -92,6 +114,17 @@ class Sideloader {
 
 		update_post_meta( $attachment_id, self::META_SOURCE_BLOG, $source_blog_id );
 		update_post_meta( $attachment_id, self::META_SOURCE_POST, $source_attachment );
+
+		/**
+		 * Fires after a sideload operation.
+		 *
+		 * @param int   $attachment_id     The ID of the sideloaded attachment.
+		 * @param array $file_array        The file array.
+		 * @param array $post_data         The post data.
+		 * @param int   $source_blog_id    The ID of the source blog.
+		 * @param int   $source_attachment The ID of the source attachment.
+		 */
+		do_action( 'cross_site_media_after_sideload', $attachment_id, $file_array, $post_data, $source_blog_id, $source_attachment );
 
 		return (int) $attachment_id;
 	}
@@ -147,13 +180,21 @@ class Sideloader {
 		$post = get_post( $source_attachment );
 		if ( ! $post || 'attachment' !== $post->post_type ) {
 			restore_current_blog();
-			return new WP_Error( 'cross_site_media_not_found', __( 'Source attachment not found.', 'cross-site-media' ) );
+			return new WP_Error(
+				'cross_site_media_not_found',
+				__( 'Source attachment not found.', 'cross-site-media' ),
+				[ 'status' => 404 ]
+			);
 		}
 
 		$file_path = get_attached_file( $source_attachment, true );
 		if ( ! $file_path || ! is_readable( $file_path ) ) {
 			restore_current_blog();
-			return new WP_Error( 'cross_site_media_unreadable', __( 'Source media file is not readable.', 'cross-site-media' ) );
+			return new WP_Error(
+				'cross_site_media_unreadable',
+				__( 'Source media file is not readable.', 'cross-site-media' ),
+				[ 'status' => 500 ]
+			);
 		}
 
 		$data = [
@@ -169,7 +210,7 @@ class Sideloader {
 		/**
 		 * Filters the source data for an attachment before it is sideloaded.
 		 *
-		 * @param array $data              The source data.
+		 * @param array $data              The source data (file data, post data, and metadata).
 		 * @param int   $source_blog_id    The ID of the source blog.
 		 * @param int   $source_attachment The ID of the source attachment.
 		 *

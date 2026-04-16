@@ -154,12 +154,11 @@ class AccessControl {
 		}
 
 		// Reject requests targeting the current blog — there's nothing to switch.
-		if ( get_current_blog_id() === $blog_id ) {
-			return 0;
-		}
-
-		// Validate the blog actually exists.
-		if ( ! get_site( $blog_id ) ) {
+		// Reject requests targeting a non-existent blog.
+		if (
+			get_current_blog_id() === $blog_id ||
+			! get_site( $blog_id )
+		) {
 			return 0;
 		}
 

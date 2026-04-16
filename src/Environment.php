@@ -68,7 +68,7 @@ class Environment implements ModuleInterface {
 	}
 
 	/**
-	 * Render the "this plugin requires multisite" admin notice.
+	 * Render the admin notice for environment issues.
 	 *
 	 * @return void
 	 */
@@ -82,19 +82,31 @@ class Environment implements ModuleInterface {
 
 		// Check if WordPress version is compatible.
 		if ( ! $this->check_wp_version() ) {
-			// translators: %1$s: The current WordPress version, %2$s: The minimum required WordPress version.
-			$issues[] = sprintf( __( 'WordPress version is not compatible. You are running WordPress %1$s, but Cross Site Media requires WordPress %2$s.', 'cross-site-media' ), get_bloginfo( 'version' ), self::MIN_WORDPRESS_VERSION );
+			$issues[] = sprintf(
+				// translators: %1$s: The current WordPress version, %2$s: The minimum required WordPress version.
+				__( 'WordPress version is not compatible. You are running WordPress %1$s, but Cross Site Media requires WordPress %2$s.', 'cross-site-media' ),
+				get_bloginfo( 'version' ),
+				self::MIN_WORDPRESS_VERSION
+			);
 		}
 
 		// Check if PHP version is compatible.
 		if ( ! $this->check_php_version() ) {
-			// translators: %1$s: The current PHP version, %2$s: The minimum required PHP version.
-			$issues[] = sprintf( __( 'PHP version is not compatible. You are running PHP %1$s, but Cross Site Media requires PHP %2$s.', 'cross-site-media' ), phpversion(), self::MIN_PHP_VERSION );
+			$issues[] = sprintf(
+				// translators: %1$s: The current PHP version, %2$s: The minimum required PHP version.
+				__( 'PHP version is not compatible. You are running PHP %1$s, but Cross Site Media requires PHP %2$s.', 'cross-site-media' ),
+				phpversion(),
+				self::MIN_PHP_VERSION
+			);
 		}
 
 		if ( ! empty( $issues ) ) {
-			// translators: %s: A list of the issues with the environment.
-			$message = sprintf( "There are issues with your environment preventing Cross Site Media from working.\n\n%s", implode( "\n", $issues ) );
+			$message = sprintf(
+				// translators: %s: A list of the issues with the environment.
+				__( 'There are issues with your environment preventing Cross Site Media from working: %s', 'cross-site-media' ),
+				esc_html( "\n\n" . implode( "\n", $issues ) )
+			);
+
 			wp_admin_notice( $message, [ 'type' => 'error' ] );
 		}
 	}

@@ -136,6 +136,6 @@ class SideloadController implements ModuleInterface {
 	 * @return string The REST endpoint path.
 	 */
 	public static function get_endpoint(): string {
-		return trailingslashit( self::REST_NAMESPACE ) . self::REST_ROUTE;
+		return untrailingslashit( self::REST_NAMESPACE ) . self::REST_ROUTE;
 	}
 }
