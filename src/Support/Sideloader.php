@@ -25,6 +25,16 @@ class Sideloader {
 	public const META_SOURCE_POST = '_cross_site_media_source_attachment_id';
 
 	/**
+	 * Core meta keys managed by media_handle_sideload() / wp_insert_attachment().
+	 *
+	 * @var string[]
+	 */
+	private const PROTECTED_META_KEYS = [
+		'_wp_attached_file',
+		'_wp_attachment_metadata',
+	];
+
+	/**
 	 * Sideload a remote attachment into the current site.
 	 *
 	 * @param int $source_blog_id    Blog to read from.
@@ -116,10 +126,16 @@ class Sideloader {
 		 */
 		$preserve_meta = apply_filters( 'cross_site_media_preserve_meta', true, $source_blog_id, $source_attachment );
 
-		// Preserve all origin postmeta.
+		// Preserve origin postmeta, skipping core keys that media_handle_sideload already populated.
 		if ( $preserve_meta && ! empty( $source['postmeta'] ) && is_array( $source['postmeta'] ) ) {
-			foreach ( $source['postmeta'] as $key => $value ) {
-				update_post_meta( $attachment_id, $key, $value );
+			foreach ( $source['postmeta'] as $key => $values ) {
+				if ( in_array( $key, self::PROTECTED_META_KEYS, true ) ) {
+					continue;
+				}
+
+				foreach ( (array) $values as $value ) {
+					update_post_meta( $attachment_id, $key, maybe_unserialize( $value ) );
+				}
 			}
 		}
 

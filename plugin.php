@@ -46,7 +46,7 @@ if ( ! file_exists( CROSS_SITE_MEDIA_PATH . 'vendor/autoload.php' ) ) {
 
 require_once CROSS_SITE_MEDIA_PATH . 'vendor/autoload.php';
 
-$plugin_core = new \CrossSiteMedia\PluginCore();
+$plugin_core = new CrossSiteMedia\PluginCore();
 
 // Activation/Deactivation.
 register_activation_hook( __FILE__, [ $plugin_core, 'activate' ] );
