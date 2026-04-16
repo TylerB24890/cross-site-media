@@ -105,8 +105,19 @@ class Sideloader {
 			return $attachment_id;
 		}
 
+		/**
+		 * Filters whether to preserve the origin postmeta when sideloading an attachment.
+		 *
+		 * @param bool $preserve_meta     Whether to preserve the origin postmeta.
+		 * @param int  $source_blog_id    The ID of the source blog.
+		 * @param int  $source_attachment The ID of the source attachment.
+		 *
+		 * @return bool
+		 */
+		$preserve_meta = apply_filters( 'cross_site_media_preserve_meta', true, $source_blog_id, $source_attachment );
+
 		// Preserve all origin postmeta.
-		if ( $preserve_meta && ! empty( $source['postmeta'] ) ) {
+		if ( $preserve_meta && ! empty( $source['postmeta'] ) && is_array( $source['postmeta'] ) ) {
 			foreach ( $source['postmeta'] as $key => $value ) {
 				update_post_meta( $attachment_id, $key, $value );
 			}
@@ -161,8 +172,11 @@ class Sideloader {
 			]
 		);
 
-		$ids = $query->posts;
-		return $ids ? (int) $ids[0] : 0;
+		if ( $query->have_posts() && is_int( $query->posts[0] ) ) {
+			return (int) $query->posts[0];
+		}
+
+		return 0;
 	}
 
 	/**
@@ -172,7 +186,7 @@ class Sideloader {
 	 * @param int $source_blog_id    Blog to read from.
 	 * @param int $source_attachment Attachment post ID on the source blog.
 	 *
-	 * @return array{filename:string,path:string,title:string,caption:string,description:string,metadata:array|false,postmeta:mixed}|WP_Error
+	 * @return array|WP_Error
 	 */
 	private function read_source( int $source_blog_id, int $source_attachment ): array|WP_Error {
 		switch_to_blog( $source_blog_id );

@@ -148,8 +148,12 @@ class ListModeFilter implements ModuleInterface {
 	 * @return bool
 	 */
 	private function is_list_mode_request(): bool {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$mode_param = isset( $_GET['mode'] ) ? sanitize_key( wp_unslash( $_GET['mode'] ) ) : '';
+		/* phpcs:disable WordPress.Security.NonceVerification.Recommended */
+		$mode_param = isset( $_GET['mode'] ) && is_string( $_GET['mode'] )
+			? sanitize_key( wp_unslash( $_GET['mode'] ) )
+			: '';
+		/* phpcs:enable WordPress.Security.NonceVerification.Recommended */
+
 		if ( '' !== $mode_param ) {
 			return 'list' === $mode_param;
 		}

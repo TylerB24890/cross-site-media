@@ -129,7 +129,7 @@ class AccessControl {
 			$value = $request->get_param( self::BLOG_ID_PARAM );
 		} else {
 			// phpcs:disable WordPress.Security.NonceVerification.Recommended
-			$top_level = isset( $_REQUEST[ self::BLOG_ID_PARAM ] )
+			$top_level = isset( $_REQUEST[ self::BLOG_ID_PARAM ] ) && is_string( $_REQUEST[ self::BLOG_ID_PARAM ] )
 				? sanitize_text_field( wp_unslash( $_REQUEST[ self::BLOG_ID_PARAM ] ) )
 				: null;
 
@@ -141,7 +141,9 @@ class AccessControl {
 				is_array( $_REQUEST['query'] ) &&
 				isset( $_REQUEST['query'][ self::BLOG_ID_PARAM ] )
 			) {
-				$nested = sanitize_text_field( wp_unslash( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) );
+				$nested = is_string( $_REQUEST['query'][ self::BLOG_ID_PARAM ] )
+					? sanitize_text_field( wp_unslash( $_REQUEST['query'][ self::BLOG_ID_PARAM ] ) )
+					: null;
 			}
 			// phpcs:enable WordPress.Security.NonceVerification.Recommended
 

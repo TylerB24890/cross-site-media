@@ -92,12 +92,12 @@ class SideloadController implements ModuleInterface {
 			return false;
 		}
 
-		$source_blog_id = (int) $request->get_param( 'source_blog_id' );
-		if ( $source_blog_id <= 0 ) {
+		$source_blog_id = $request->get_param( 'source_blog_id' );
+		if ( ! is_numeric( $source_blog_id ) || (int) $source_blog_id <= 0 ) {
 			return false;
 		}
 
-		return AccessControl::user_can_browse( $source_blog_id );
+		return AccessControl::user_can_browse( (int) $source_blog_id );
 	}
 
 	/**
@@ -109,10 +109,26 @@ class SideloadController implements ModuleInterface {
 	 * @return WP_REST_Response|WP_Error
 	 */
 	public function handle( WP_REST_Request $request ) {
-		$source_blog_id       = (int) $request->get_param( 'source_blog_id' );
-		$source_attachment_id = (int) $request->get_param( 'source_attachment_id' );
+		$source_blog_id       = $request->get_param( 'source_blog_id' );
+		$source_attachment_id = $request->get_param( 'source_attachment_id' );
 
-		$result = ( new Sideloader() )->sideload( $source_blog_id, $source_attachment_id );
+		if ( ! is_numeric( $source_attachment_id ) || (int) $source_attachment_id <= 0 ) {
+			return new WP_Error(
+				'cross_site_media_invalid_args',
+				__( 'Invalid attachment id.', 'cross-site-media' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		if ( ! is_numeric( $source_blog_id ) || (int) $source_blog_id <= 0 ) {
+			return new WP_Error(
+				'cross_site_media_invalid_args',
+				__( 'Invalid blog id.', 'cross-site-media' ),
+				[ 'status' => 400 ]
+			);
+		}
+
+		$result = ( new Sideloader() )->sideload( (int) $source_blog_id, (int) $source_attachment_id );
 
 		if ( is_wp_error( $result ) ) {
 			return $result;
