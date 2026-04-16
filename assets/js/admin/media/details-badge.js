@@ -13,15 +13,17 @@ import { getConfig } from './config';
 export function installDetailsBadge() {
 	const { media } = window.wp || {};
 	const config = getConfig();
-	if (!media || !media.view || !media.view.Attachment || !config) {
+	if (
+		!media ||
+		!config ||
+		!media.view ||
+		!media.view.Attachment ||
+		!media.view.Attachment.Details
+	) {
 		return;
 	}
 
 	const { Details } = media.view.Attachment;
-	if (!Details) {
-		return;
-	}
-
 	const originalRender = Details.prototype.render;
 
 	Details.prototype.render = function render(...args) {

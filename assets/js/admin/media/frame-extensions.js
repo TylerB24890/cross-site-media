@@ -104,13 +104,10 @@ export function extendMediaFrames() {
 		return;
 	}
 
-	const { media } = window.wp || {};
-	if (!media || !media.view || !media.view.MediaFrame) {
-		return;
-	}
-
 	const { subsites } = config;
-	if (!subsites.length) {
+	const { media } = window.wp || {};
+
+	if (!media || !media.view || !media.view.MediaFrame || !subsites.length) {
 		return;
 	}
 
